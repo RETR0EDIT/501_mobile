@@ -1,31 +1,36 @@
-import { StyleSheet } from 'react-native';
+// filepath: /C:/xampp/htdocs/501/501_mobile/501_mobile/app/(tabs)/index.tsx
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { DarkModeProvider } from "../../components/utils/DarkModeContext";
+import Footer from "../../components/Footer";
+import Home from "../../components/Home";
+import Login from "../../components/Login";
+import Signin from "../../components/Singin";
+import RoomTour from "../../components/visiteur/Room_tour";
+import Cursus from "../../components/Cursus";
+import RouteVisiteur from "../../components/visiteur/Route";
+import RouteProffeseur from "../../components/professeur/Route";
+import ErrorPage from "../../components/visiteur/ErrorPage";
 
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/components/Themed';
+const Stack = createNativeStackNavigator();
 
-export default function TabOneScreen() {
+export default function App() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
-    </View>
+    <DarkModeProvider>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Home">
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Signin" component={Signin} />
+          <Stack.Screen name="RoomTour" component={RoomTour} />
+          <Stack.Screen name="Cursus" component={Cursus} />
+          <Stack.Screen name="RouteVisiteur" component={RouteVisiteur} />
+          <Stack.Screen name="RouteProffeseur" component={RouteProffeseur} />
+          <Stack.Screen name="ErrorPage" component={ErrorPage} />
+        </Stack.Navigator>
+      </NavigationContainer>
+      <Footer />
+    </DarkModeProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
-});

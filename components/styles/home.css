@@ -1,0 +1,186 @@
+/* styles/home.css */
+
+.home-container {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.jpo-section {
+  background-image: url("/background_home.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  padding-top: 56.25%; /* Aspect ratio 16:9 */
+  position: relative;
+}
+
+.jpo-content {
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  transform: translateY(-50%);
+  background: #432683;
+  padding: 30px 10px 10px 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.jpo-header {
+  font-family: "TT Norms Pro Bold", sans-serif;
+  color: #fff;
+}
+
+.jpo-title {
+  width: 90%;
+  font-size: 2rem;
+  margin: 0;
+}
+
+.jpo-date {
+  font-family: "TT Norms Pro Regular", sans-serif;
+  color: #fff;
+  font-size: 1.3rem;
+  margin: 10px 0;
+}
+
+.jpo-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.jpo-button {
+  font-family: "Poppins Medium", sans-serif;
+  background-color: #fff;
+  color: #432683;
+  border: none;
+  font-size: 20px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.jpo-image {
+  width: 100px;
+  height: auto;
+}
+
+.apropos-section {
+  background: #fff;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 40px;
+  align-items: center;
+}
+
+.apropos-content-left,
+.apropos-content-right {
+  flex: 1;
+  min-width: 300px;
+  padding: 20px;
+}
+
+.apropos-content-left {
+  display: flex;
+
+  flex-direction: column;
+  justify-content: center;
+}
+
+.apropos-content-right img {
+  width: 100%;
+  height: auto;
+}
+
+.apropos-header {
+  text-align: left;
+  padding: 10px 0;
+}
+
+.apropos-title {
+  font-size: 3rem;
+  margin: 0;
+  color: #432683;
+}
+
+.apropos-text {
+  font-size: 1.5rem;
+  line-height: 1.5;
+  color: #333;
+}
+.apropos-text p {
+  width: 90%;
+  color: #432683;
+  margin-bottom: 20px;
+}
+
+.apropos-actions {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.apropos-button {
+  width: 175px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #432683;
+  color: #fff;
+  border: none;
+  padding: 15px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-right: 10px;
+  font-size: 1.1rem;
+}
+
+.apropos-button img {
+  width: 15px;
+  height: auto;
+}
+
+.apropos-image {
+  width: 20px;
+  height: auto;
+}
+
+@media (max-width: 1150px) {
+  .apropos-text {
+    font-size: 1.1rem;
+  }
+  .apropos-button {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .jpo-content {
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .apropos-section {
+    flex-direction: column;
+  }
+
+  .apropos-content-left,
+  .apropos-content-right {
+    min-width: 100%;
+  }
+
+  .apropos-section {
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .apropos-title {
+    font-size: 2rem;
+  }
+  .apropos-text {
+    font-size: 1rem;
+  }
+}
