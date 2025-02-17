@@ -1,0 +1,202 @@
+.login-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 87vh;
+  background-color: #f5f5f5;
+}
+.logo-item {
+  border-radius: 0 !important;
+  background: none !important;
+  border: 3px solid #fff;
+}
+
+.nav-item {
+  margin: 0 1rem;
+  padding: 10px 20px;
+
+  border-radius: 38px;
+}
+.nav-link {
+  text-decoration: none;
+}
+
+.login-section {
+  margin: 0 50px;
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-ctn {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  min-width: 530px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 25px;
+  border: 6px solid #432683;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+}
+
+.login_form_title {
+  margin: 30px 0 70px 0;
+}
+
+.input-ctn {
+  position: relative;
+  margin-bottom: 50px;
+}
+
+.login-span {
+  font-family: "TT Norms Pro Regular";
+  position: absolute;
+  padding: 0 10px;
+  top: 0;
+  background-color: #fff;
+  left: 45px;
+  transform: translateY(-50%);
+  color: #432683;
+}
+
+.login-input {
+  width: 390px;
+  padding: 10px 0 10px 10px;
+  border: 1px solid #432683;
+  border-radius: 10px;
+}
+
+.login-button {
+  padding: 0 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  background-color: #432683;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: auto;
+  margin: 0 auto 50px auto;
+}
+
+.login-button-icon {
+  margin-left: 10px;
+  width: 15px;
+}
+
+.elipse {
+  position: absolute;
+  top: 136px;
+  right: 525px;
+  width: 214px;
+  height: 305px;
+  z-index: -1;
+}
+
+.elipse_2 {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 214px;
+  height: 305px;
+  z-index: -1;
+}
+
+.welcome-title h1 {
+  color: #fff;
+  font-family: "TT Norms Pro Bold";
+  font-size: 4rem;
+  line-height: 1.2;
+  max-height: 2.4em;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  padding: 0 50px;
+  margin: 50px 0 20px 0;
+}
+
+.welcome-title h1.shrink {
+  font-size: 1.5rem;
+}
+
+.welcome-txt {
+  color: #fff;
+  font-family: "TT Norms Pro Regular";
+  font-size: 1.7rem;
+  padding: 0 50px;
+  margin: 0 0 100px 0;
+}
+
+.div-login-logo {
+  position: absolute;
+  bottom: 0;
+  left: 12.5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 75%;
+  margin: 0 auto;
+}
+
+.login-logo {
+  width: 80%;
+}
+
+@media (max-width: 1500px) {
+  .login-container {
+    height: 70vh;
+  }
+  .logo-item {
+    display: none;
+  }
+
+  .login_form_title {
+    margin: 30px;
+  }
+  .input-ctn {
+    margin-bottom: 30px;
+  }
+  .login-button {
+    margin: 0 auto 30px auto;
+  }
+}
+
+@media (max-width: 1400px) {
+  .welcome-title h1 {
+    font-size: 2.5rem;
+  }
+  .welcome-txt {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 1260px) {
+  .login-container {
+    flex-direction: column;
+    height: auto;
+  }
+  .login-logo {
+    display: none;
+  }
+  .welcome-section,
+  .login-section {
+    margin-bottom: 40px;
+  }
+
+  .elipse,
+  .elipse_2 {
+    display: none;
+  }
+}

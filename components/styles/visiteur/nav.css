@@ -1,0 +1,32 @@
+#my_info {
+  width: 109px;
+}
+
+#room_tour {
+  width: 117px;
+}
+
+#my_results {
+  width: 135px;
+}
+
+@media (max-width: 768px) {
+  #my_info {
+    width: 60%;
+  }
+
+  #room_tour {
+    width: 60%;
+  }
+
+  #my_results {
+    width: 60%;
+  }
+
+  .div-test {
+    width: 60%;
+  }
+  .auth-nav {
+    flex-direction: row;
+  }
+}

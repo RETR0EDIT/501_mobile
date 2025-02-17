@@ -1,0 +1,202 @@
+.profils-visiteur {
+  display: flex;
+  flex-direction: column;
+  font-family: Arial, sans-serif;
+}
+
+/* Grande section */
+.large-section {
+  width: 55%;
+  height: 70vh;
+  background-color: #432683;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  position: relative;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.profile-circle {
+  width: 250px;
+  height: 250px;
+  position: relative;
+
+  margin-bottom: 10px;
+}
+
+.upload-container {
+  z-index: 2;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background-color: #432683;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.upload-container .custom-file-upload {
+  display: block;
+  text-align: center;
+  margin: auto;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.upload-container label img {
+  width: 25px;
+  height: 25px;
+  border-radius: 0;
+}
+
+.profile-circle img {
+  width: 100%;
+  border-radius: 50%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Nom et prénom */
+.profile-name {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 10px 0;
+}
+
+/* Barre blanche sous le nom */
+.divider-bar {
+  width: 200px;
+  height: 2px;
+  background-color: white;
+  margin: 20px 0;
+}
+
+/* Rôle de l'utilisateur */
+.role {
+  font-size: 1.2rem;
+  color: white;
+  margin-top: 10px;
+  font-weight: lighter;
+}
+
+/* Conteneur pour l'upload */
+
+/* Petite section  */
+.small-section {
+  width: 55%;
+  min-height: 400px;
+  background-color: #583e92;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  box-sizing: border-box;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+/* Titre de la section */
+.section-title {
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: left;
+  width: 80%;
+  margin-top: 0;
+  text-align: center;
+}
+
+/* Grille pour les détails */
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  width: 80%;
+  max-width: 800px;
+}
+
+/* Carte pour chaque détail (email, mot de passe, téléphone) */
+.detail-item {
+  position: relative;
+  border: 1px solid white;
+  border-radius: 8px;
+  padding: 20px 15px 10px 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Titre encastré dans la bordure */
+.detail-item label {
+  position: absolute;
+  top: -12px;
+  left: 15px;
+  background-color: #583e92;
+  padding: 0 8px;
+  color: white;
+  font-size: 0.9rem;
+}
+
+/* Texte à l'intérieur des cartes */
+.detail-item p {
+  color: white;
+  font-size: 1rem;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .large-section {
+    height: auto;
+    padding: 20px;
+  }
+
+  .profile-name {
+    font-size: 1.5rem;
+  }
+
+  .profile-circle {
+    width: 150px;
+    height: 150px;
+  }
+
+  .divider-bar {
+    width: 150px;
+  }
+
+  .small-section {
+    padding: 15px;
+    min-height: 500px;
+  }
+
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section-title {
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  .detail-item {
+    padding: 15px 10px 8px 10px;
+  }
+
+  .detail-item label {
+    font-size: 0.8rem;
+  }
+
+  .profile-circle img {
+    object-fit: contain;
+  }
+}
