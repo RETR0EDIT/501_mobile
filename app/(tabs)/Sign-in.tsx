@@ -6,7 +6,7 @@ export default function Cursus() {
   return (
     <SafeAreaView>
       <View>
-        <Text>inscription</Text>
+        <Text>inscriptions</Text>
       </View>
     </SafeAreaView>
   );
