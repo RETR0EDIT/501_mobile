@@ -1,9 +1,10 @@
 import React from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { Tabs } from "expo-router";
+import { Link, Tabs } from "expo-router";
+import { Pressable } from "react-native";
+import Colors from "@/constants/Colors";
 import { useColorScheme } from "@/components/useColorScheme";
 import { useClientOnlyValue } from "@/components/useClientOnlyValue";
-import Colors from "@/constants/Colors";
 
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>["name"];
@@ -18,49 +19,44 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
-        headerShown: useClientOnlyValue(false, true),
+        tabBarActiveTintColor: "#432683",
+        headerShown: useClientOnlyValue(false, false),
+        tabBarStyle: { position: "absolute", bottom: 0 }, 
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
-          title: "Acceuil",
-          headerShown: false,
-          tabBarStyle: { display: "none" },
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: "Accueil",
+          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />, 
         }}
       />
       <Tabs.Screen
         name="Cursus"
         options={{
           title: "Cursus",
-          headerShown: false,
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="book" color={color} />,
         }}
       />
       <Tabs.Screen
-        name="A Propos"
+        name="Apropos"
         options={{
           title: "A propos",
-          headerShown: false,
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="info-circle" color={color} />, 
         }}
       />
       <Tabs.Screen
         name="Se Connecter"
         options={{
           title: "Se connecter",
-          headerShown: false,
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="sign-in" color={color} />, 
         }}
       />
       <Tabs.Screen
         name="S'inscrire"
         options={{
           title: "S'inscrire",
-          headerShown: false,
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="user-plus" color={color} />, 
         }}
       />
     </Tabs>
