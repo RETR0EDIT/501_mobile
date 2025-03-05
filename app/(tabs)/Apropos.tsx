@@ -4,8 +4,8 @@ import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 
 export default function Apropos() {
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.content}>
+    <SafeAreaView style={[styles.container, { backgroundColor: "#fff" }]}>
+      <ScrollView contentContainerStyle={[styles.content, { backgroundColor: "#fff" }]}>
         <View style={styles.section}>
           <Text style={styles.title}>À propos de l'IUT</Text>
           <Text style={styles.text}>
@@ -14,17 +14,13 @@ export default function Apropos() {
           <Text style={styles.text}>
             Sa mission : former des étudiants pour devenir des professionnels qualifiés et polyvalents grâce à des projets concrets et une pédagogie innovante. L’approche professionnalisante de l’IUT, ses infrastructures modernes, et ses liens avec le monde de l’entreprise en font un choix idéal pour réussir.
           </Text>
-          <Text style={styles.text}>
+          <Text style={styles.text2}>
             Rejoindre l’IUT de Meaux, c’est opter pour :
           </Text>
-          <Text style={styles.text}>
-            - Une formation adaptée aux besoins actuels.
-          </Text>
-          <Text style={styles.text}>
-            - Un accompagnement personnalisé dans un environnement à taille humaine.
-          </Text>
-          <Text style={styles.text}>
-            - De multiples opportunités professionnelles et académiques.
+          <Text style={styles.text3}>
+            {"- Une formation adaptée aux besoins actuels.\n"}
+            {"- Un accompagnement personnalisé dans un environnement à taille humaine.\n"}
+            {"- De multiples opportunités professionnelles et académiques."}
           </Text>
         </View>
       </ScrollView>
@@ -35,7 +31,7 @@ export default function Apropos() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#fff",
   },
   content: {
     padding: 20,
@@ -44,14 +40,26 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 35,
     fontWeight: "bold",
     color: "#432683",
-    marginBottom: 10,
+    marginBottom: 25,
   },
   text: {
-    fontSize: 16,
+    fontSize: 18,
     color: "#333",
     marginBottom: 10,
+  },
+  text2: {
+    fontSize: 19,
+    color: "#432683",
+    marginBottom: 10,
+    fontWeight: "bold",
+    marginTop: 10,
+  },
+  text3: {
+    fontSize: 18,
+    color: "#333",
+    marginLeft: 20,
   },
 });
