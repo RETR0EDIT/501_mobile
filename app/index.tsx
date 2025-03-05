@@ -33,7 +33,6 @@ const Login: React.FC = ({ navigation }) => {
         await AsyncStorage.setItem("userId", response.id);
         await AsyncStorage.setItem("userRole", response.role);
 
-        // Rediriger vers le composant Home après une connexion réussie
         navigation.navigate("home");
       } else {
         setMessage("Erreur lors de la connexion");
@@ -44,13 +43,6 @@ const Login: React.FC = ({ navigation }) => {
       console.error("Erreur lors de la connexion", err);
     }
   };
-
-  useEffect(() => {
-    const titleElement = titleRef.current;
-    if (titleElement && titleElement.scrollHeight > titleElement.clientHeight) {
-      titleElement.classList.add("shrink");
-    }
-  }, []);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
