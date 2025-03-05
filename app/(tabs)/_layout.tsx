@@ -21,14 +21,16 @@ export default function TabLayout() {
       screenOptions={{
         tabBarActiveTintColor: "#432683",
         headerShown: useClientOnlyValue(false, false),
-        tabBarStyle: { position: "absolute", bottom: 0 }, 
+        tabBarStyle: { position: "absolute", bottom: 0 },
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
-          title: "Connexion",
-          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />, 
+          title: "Accueil",
+          headerShown: false,
+
+          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
         }}
       />
       <Tabs.Screen
@@ -42,21 +44,27 @@ export default function TabLayout() {
         name="Apropos"
         options={{
           title: "A propos",
-          tabBarIcon: ({ color }) => <TabBarIcon name="info-circle" color={color} />, 
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="info-circle" color={color} />
+          ),
         }}
       />
       <Tabs.Screen
         name="Se Connecter"
         options={{
           title: "Se connecter",
-          tabBarIcon: ({ color }) => <TabBarIcon name="sign-in" color={color} />, 
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="sign-in" color={color} />
+          ),
         }}
       />
       <Tabs.Screen
         name="S'inscrire"
         options={{
           title: "S'inscrire",
-          tabBarIcon: ({ color }) => <TabBarIcon name="user-plus" color={color} />, 
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="user-plus" color={color} />
+          ),
         }}
       />
     </Tabs>
