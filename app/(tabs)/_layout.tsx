@@ -9,7 +9,7 @@ function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>["name"];
   color: string;
 }) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
+  return <FontAwesome size={28} style={{}} {...props} />;
 }
 
 export default function TabLayout() {
@@ -20,6 +20,7 @@ export default function TabLayout() {
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
         headerShown: useClientOnlyValue(false, true),
+        tabBarStyle: { padding: 0 },
       }}
     >
       <Tabs.Screen
@@ -27,8 +28,8 @@ export default function TabLayout() {
         options={{
           title: "Acceuil",
           headerShown: false,
-          tabBarStyle: { display: "none" },
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarStyle: { padding: 0 },
         }}
       />
       <Tabs.Screen
@@ -37,6 +38,7 @@ export default function TabLayout() {
           title: "Cursus",
           headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarStyle: { padding: 0 },
         }}
       />
       <Tabs.Screen
@@ -45,22 +47,7 @@ export default function TabLayout() {
           title: "A propos",
           headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="Se Connecter"
-        options={{
-          title: "Se connecter",
-          headerShown: false,
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="S'inscrire"
-        options={{
-          title: "S'inscrire",
-          headerShown: false,
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarStyle: { padding: 0 },
         }}
       />
     </Tabs>

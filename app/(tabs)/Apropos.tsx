@@ -2,11 +2,11 @@ import React from "react";
 import { Text, View } from "@/components/Themed";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function Cursus() {
+export default function Apropos() {
   return (
     <SafeAreaView>
       <View>
-        <Text>inscriptions</Text>
+        <Text>a propos</Text>
       </View>
     </SafeAreaView>
   );
