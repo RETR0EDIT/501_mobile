@@ -8,6 +8,8 @@ import {
   StyleSheet,
 } from "react-native";
 
+import { useNavigation } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import Accounts from "@/src/services/Accounts";
 
 const Login: React.FC = ({ navigation }) => {
@@ -17,6 +19,7 @@ const Login: React.FC = ({ navigation }) => {
   });
   const [message, setMessage] = useState("");
   const titleRef = useRef(null);
+  navigation = useNavigation();
 
   const handleChange = (name: string, value: string) => {
     setLoginData({ ...loginData, [name]: value });
@@ -30,11 +33,7 @@ const Login: React.FC = ({ navigation }) => {
         await AsyncStorage.setItem("userId", response.id);
         await AsyncStorage.setItem("userRole", response.role);
 
-        if (response.role === "professeur") {
-          navigation.navigate("Professeur");
-        } else {
-          navigation.navigate("Visiteur");
-        }
+        navigation.navigate("home");
       } else {
         setMessage("Erreur lors de la connexion");
         console.log("Réponse de l'API", response);
@@ -44,13 +43,6 @@ const Login: React.FC = ({ navigation }) => {
       console.error("Erreur lors de la connexion", err);
     }
   };
-
-  useEffect(() => {
-    const titleElement = titleRef.current;
-    if (titleElement && titleElement.scrollHeight > titleElement.clientHeight) {
-      titleElement.classList.add("shrink");
-    }
-  }, []);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
