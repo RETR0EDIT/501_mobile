@@ -6,9 +6,7 @@ import ModelAnswers from "../models/ModelAnswers";
 
 const API_URL = "http://localhost:8080/api/answers";
 
-
-
-const Answer = {
+const Answers = {
   Create: async (Data: ModelAnswers) => {
     return await Post(API_URL, Data);
   },
@@ -18,7 +16,9 @@ const Answer = {
   ReadOne: async (id: string) => {
     return await Get(`${API_URL}/${id}`);
   },
-
+  ReadByUserId: async (userId: string) => {
+    return await Get(`${API_URL}/user/${userId}`);
+  },
   Update: async (Data: ModelAnswers) => {
     return await Put(API_URL, Data);
   },
@@ -27,4 +27,5 @@ const Answer = {
   },
 };
 
-export default Answer;
+export default Answers;
+

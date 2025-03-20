@@ -6,14 +6,12 @@ import ModelQuestion from "../models/ModelQuestion";
 
 const API_URL = "http://localhost:8080/api/questions";
 
-
-
 const Questions = {
   Create: async (Data: ModelQuestion) => {
     return await Post(API_URL, Data);
   },
   Read: async (idTest) => {
-    return await Get(API_URL + '/test/' + idTest);
+    return await Get(API_URL + "/test/" + idTest);
   },
   ReadOne: async (id: string) => {
     return await Get(`${API_URL}/${id}`);
@@ -27,3 +25,4 @@ const Questions = {
 };
 
 export default Questions;
+

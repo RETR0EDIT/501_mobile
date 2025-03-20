@@ -16,14 +16,24 @@ const Accounts = {
   ReadOne: async (id: string) => {
     return await Get(`${API_URL}/${id}`);
   },
-  Login: async (Data: any) => {
+  Login: async (Data: object) => {
     return await Post(`${API_URL}/login`, Data);
+  },
+  Studies: async () => {
+    return await Get(`${API_URL}/study`);
+  },
+  ReadByStudy: async (study: string) => {
+    return await Get(`${API_URL}/study/${study}`);
   },
   Update: async (Data: ModelAccount) => {
     return await Put(API_URL, Data);
   },
   Delete: async (id: string) => {
     return await Delete(API_URL, id);
+  },
+  VerifyToken: async (token: string) => {
+    const response = await Post(`${API_URL}/verify-token`, { token });
+    return response.data;
   },
 };
 
