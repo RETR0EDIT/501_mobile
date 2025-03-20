@@ -1,11 +1,11 @@
-
 interface ModelQuestion {
-    id: string;
-    title: string;
-    p1: string;
-    p2: string;
-    p3: string;
-    pr: string;
-    idTest: string;
+  id: number;
+  title: string;
+  p1: string;
+  p2: string;
+  p3: string;
+  p4: string;
+  pr: string;
+  test: object;
 }
 export default ModelQuestion;

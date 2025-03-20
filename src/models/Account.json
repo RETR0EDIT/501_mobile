@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "login": "user1",
+    "password": "$2a$10$V/8BH9Z1.FbgiJLyBQ97D.ZBnVpOAf1CQ8yLVdTGn2tNEkNIl1AYq",
+    "firstname": "John",
+    "lastname": "Doe",
+    "city": "New York",
+    "study": "MMI",
+    "role": "USER",
+    "phone": "1234567890",
+    "currentstudy": "t",
+    "status": "active",
+    "createdat": "2025-01-04T22:21:30.632+00:00",
+    "editedat": "2025-01-04T22:21:30.632+00:00",
+    "valid": true,
+    "date": "2025-01-04T22:21:30.632+00:00",
+    "image": "default.svg",
+    "token": "token1",
+    "validtoken": true
+  }
+]

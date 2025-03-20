@@ -1,7 +1,5 @@
 interface ModelRate {
   id: number;
-  note: string;
-  account: object;
-  test: object;
+  name: string;
 }
 export default ModelRate;
