@@ -26,7 +26,7 @@ export default function Apropos() {
       
       
         <View style={styles.section2}>
-          <Text style={styles.title2}>INFORMATIONS PRATIQUES</Text>
+          <Text style={styles.title2}>Informations pratiques :</Text>
           <Text style={styles.text}>
             L’IUT de Meaux, affilié à l’Université Gustave Eiffel, est un établissement d’enseignement supérieur au cœur de l’Île-de-France. Il offre un cadre moderne et dynamique, idéal pour développer des compétences pratiques et théoriques dans divers domaines.
           </Text>
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     fontSize: 35,
     fontWeight: "bold",
     color: "#432683",
-    marginBottom: 25,
+    marginBottom: 20,
     padding: 10,
   },
   text: {
