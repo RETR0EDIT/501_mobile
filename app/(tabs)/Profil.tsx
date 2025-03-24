@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator, Image, TouchableOpacity, TextInput, Alert } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { View, Text, StyleSheet, ActivityIndicator, Image, TouchableOpacity, TextInput, Alert, ScrollView } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { Ionicons } from '@expo/vector-icons';
-// import axios from 'axios';
+import profileDataJson from '../../src/models/Account.json';
+import { useNavigation } from '@react-navigation/native';
 
 interface ProfileData {
     id: number;
@@ -16,7 +16,6 @@ interface ProfileData {
     status: string;
     role: string;
     phone: string;
-    phoneType: string;
     currentstudy: string;
     image: string;
     createdat: Date;
@@ -25,7 +24,7 @@ interface ProfileData {
     date: Date;
     token: string;
     validtoken: boolean;
-  }
+}
 
 const Profil = () => {
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
@@ -37,67 +36,39 @@ const Profil = () => {
     password: '',
     phone: '',
   });
+  const [completedTests, setCompletedTests] = useState<string[]>([]);
+
+  const navigation = useNavigation();
 
   useEffect(() => {
-    const loadProfileData = async () => {
-      try {
-        const storedProfileData = await AsyncStorage.getItem('profileData');
-        if (storedProfileData) {
-          setProfileData(JSON.parse(storedProfileData));
-        } else {
-          // Set default profile data if none is stored
-          const defaultProfileData = {
-            id: 1,
-            login: 'john.doe@example.com',
-            password: 'password',
-            firstname: 'John',
-            lastname: 'Doe',
-            city: 'Paris',
-            study: 'Computer Science',
-            status: 'Active',
-            role: 'Student',
-            phone: '1234567890',
-            phoneType: 'Mobile',
-            currentstudy: 'Masters',
-            image: 'https://via.placeholder.com/150',
-            createdat: new Date(),
-            editedat: new Date(),
-            valid: true,
-            date: new Date(),
-            token: 'token',
-            validtoken: true,
-          };
-          setProfileData(defaultProfileData);
-          await AsyncStorage.setItem('profileData', JSON.stringify(defaultProfileData));
-        }
-      } catch (err) {
-        setError(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadProfileData();
-  }, []);
-
-  const saveProfileData = async (data: ProfileData) => {
     try {
-      await AsyncStorage.setItem('profileData', JSON.stringify(data));
+      const data = profileDataJson.find((account: ProfileData) => account.id === 1);
+      setProfileData(data || null);
     } catch (err) {
       setError(err);
+    } finally {
+      setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    // Simulate fetching completed tests
+    const fetchCompletedTests = async () => {
+      // Replace with actual API call
+      const tests = ["Test 1", "Test 2", "Test 3"];
+      setCompletedTests(tests);
+    };
+    fetchCompletedTests();
+  }, []);
 
   const pickImage = async () => {
-    
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
-    if (permissionResult.granted === false) {
+    if (!permissionResult.granted) {
       alert("Permission to access gallery is required!");
       return;
     }
 
-    
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
@@ -107,9 +78,7 @@ const Profil = () => {
 
     if (!result.canceled) {
       if (profileData) {
-        const updatedProfileData = { ...profileData, image: result.assets[0].uri };
-        setProfileData(updatedProfileData);
-        saveProfileData(updatedProfileData);
+        setProfileData({ ...profileData, image: result.assets[0].uri });
       }
     }
   };
@@ -132,7 +101,6 @@ const Profil = () => {
         phone: editedData.phone,
       };
       setProfileData(updatedProfileData);
-      saveProfileData(updatedProfileData);
     }
     setIsEditing(false);
     Alert.alert("Success", "Profile updated successfully");
@@ -140,6 +108,10 @@ const Profil = () => {
 
   const handleCancel = () => {
     setIsEditing(false);
+  };
+
+  const handleTestClick = (testName: string) => {
+    navigation.navigate('TestDetails', { testName });
   };
 
   if (loading) {
@@ -155,79 +127,91 @@ const Profil = () => {
   }
 
   return (
-    <View style={styles.container}>
-      {profileData ? (
-        <>
-          <View style={styles.profileContainer}>
-            <TouchableOpacity onPress={pickImage}>
-              <Image source={{ uri: profileData.image }} style={styles.image} />
-            </TouchableOpacity>
-            <Text style={styles.name}>{profileData.firstname} {profileData.lastname}</Text>
-            <View style={styles.dividerBar} />
-            <Text style={styles.role}>{profileData.role}</Text>
-          </View>
-          <View style={styles.accountContainer}>
-            <View style={styles.accountHeader}>
-              <Text style={styles.accountTitle}>Compte</Text>
-              <TouchableOpacity onPress={handleEdit}>
-                <Ionicons name="create" size={24} color="white" />
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <View style={styles.container}>
+        {profileData ? (
+          <>
+            <View style={styles.profileContainer}>
+              <TouchableOpacity onPress={pickImage}>
+                <Image source={{ uri: profileData.image }} style={styles.image} resizeMode="cover" />
               </TouchableOpacity>
+              <Text style={styles.name}>{profileData.firstname} {profileData.lastname}</Text>
             </View>
-            <View style={styles.detailsGrid}>
-              <View style={styles.detailItem}>
-                <Text style={styles.detailLabel}>Email</Text>
-                {isEditing ? (
-                  <TextInput
-                    style={styles.detailText}
-                    value={editedData.login}
-                    onChangeText={(text) => setEditedData({ ...editedData, login: text })}
-                  />
-                ) : (
-                  <Text style={styles.detailText}>{profileData.login}</Text>
-                )}
-              </View>
-              <View style={styles.detailItem}>
-                <Text style={styles.detailLabel}>Mot de passe</Text>
-                {isEditing ? (
-                  <TextInput
-                    style={styles.detailText}
-                    value={editedData.password}
-                    onChangeText={(text) => setEditedData({ ...editedData, password: text })}
-                    secureTextEntry
-                  />
-                ) : (
-                  <Text style={styles.detailText}>**************</Text>
-                )}
-              </View>
-              <View style={styles.detailItem}>
-                <Text style={styles.detailLabel}>Numéro de téléphone</Text>
-                {isEditing ? (
-                  <TextInput
-                    style={styles.detailText}
-                    value={editedData.phone}
-                    onChangeText={(text) => setEditedData({ ...editedData, phone: text })}
-                  />
-                ) : (
-                  <Text style={styles.detailText}>{profileData.phone}</Text>
-                )}
-              </View>
-            </View>
-            {isEditing && (
-              <View style={styles.editButtons}>
-                <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
-                  <Text style={styles.buttonText}>Save</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.cancelButton} onPress={handleCancel}>
-                  <Text style={styles.buttonText}>Cancel</Text>
+            <View style={styles.accountContainer}>
+              <View style={styles.accountHeader}>
+                <Text style={styles.accountTitle}>Compte</Text>
+                <TouchableOpacity onPress={handleEdit} style={styles.editIcon}>
+                  <Ionicons name="create" size={24} color="white" />
                 </TouchableOpacity>
               </View>
-            )}
-          </View>
-        </>
-      ) : (
-        <Text style={styles.errorText}>Aucune donnée de profil trouvée</Text>
-      )}
-    </View>
+              <View style={styles.detailsGrid}>
+                <View style={styles.detailItem}>
+                  <Text style={styles.detailLabel}>Email</Text>
+                  {isEditing ? (
+                    <TextInput
+                      style={styles.detailText}
+                      value={editedData.login}
+                      onChangeText={(text) => setEditedData({ ...editedData, login: text })}
+                    />
+                  ) : (
+                    <Text style={styles.detailText}>{profileData.login}</Text>
+                  )}
+                </View>
+                <View style={styles.detailItem}>
+                  <Text style={styles.detailLabel}>Mot de passe</Text>
+                  {isEditing ? (
+                    <TextInput
+                      style={styles.detailText}
+                      value={editedData.password}
+                      onChangeText={(text) => setEditedData({ ...editedData, password: text })}
+                      secureTextEntry
+                    />
+                  ) : (
+                    <Text style={styles.detailText}>**************</Text>
+                  )}
+                </View>
+                <View style={styles.detailItem}>
+                  <Text style={styles.detailLabel}>Numéro de téléphone</Text>
+                  {isEditing ? (
+                    <TextInput
+                      style={styles.detailText}
+                      value={editedData.phone}
+                      onChangeText={(text) => setEditedData({ ...editedData, phone: text })}
+                    />
+                  ) : (
+                    <Text style={styles.detailText}>{profileData.phone}</Text>
+                  )}
+                </View>
+              </View>
+              {isEditing && (
+                <View style={styles.editButtons}>
+                  <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
+                    <Text style={styles.buttonText}>Save</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.cancelButton} onPress={handleCancel}>
+                    <Text style={styles.buttonText}>Cancel</Text>
+                  </TouchableOpacity>
+                </View>
+              )}
+            </View>
+            <View style={styles.completedTestsContainer}>
+              <Text style={styles.completedTestsTitle}>Tests Complétés</Text>
+              {completedTests.length > 0 ? (
+                completedTests.map((test, index) => (
+                  <TouchableOpacity key={index} onPress={() => handleTestClick(test)}>
+                    <Text style={styles.completedTestName}>{test}</Text>
+                  </TouchableOpacity>
+                ))
+              ) : (
+                <Text style={styles.noTestsText}>Aucun test complété</Text>
+              )}
+            </View>
+          </>
+        ) : (
+          <Text style={styles.errorText}>Aucune donnée de profil trouvée</Text>
+        )}
+      </View>
+    </ScrollView>
   );
 };
 
@@ -252,15 +236,17 @@ const styles = StyleSheet.create({
   },
   accountHeader: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    marginBottom: 38,
     alignItems: 'center',
     width: '100%',
   },
   accountTitle: {
     fontSize: 40,
     fontWeight: 'bold',
-    marginBottom: 40,
     color: '#fff',
+  },
+  editIcon: {
+    marginLeft: 10,
   },
   detailsGrid: {
     width: '100%',
@@ -341,6 +327,35 @@ const styles = StyleSheet.create({
   errorText: {
     fontSize: 18,
     color: 'red',
+  },
+  completedTestsContainer: {
+    backgroundColor: '#432683',
+    width: '100%',
+    padding: 16,
+    alignItems: 'center',
+    marginTop: 16,
+    marginBottom: 30,
+  },
+  completedTestsTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#fff',
+    marginBottom: 8,
+  },
+  completedTestName: {
+    fontSize: 18,
+    color: '#fff',
+    marginBottom: 4,
+  },
+  noTestsText: {
+    fontSize: 18,
+    color: '#fff',
+  },
+  scrollContainer: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingBottom: 30, // Add padding to the bottom
   },
 });
 
