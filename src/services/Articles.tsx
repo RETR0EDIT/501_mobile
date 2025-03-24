@@ -6,7 +6,6 @@ import ModelArticle from "../models/ModelArticle";
 
 const API_URL = "http://localhost:8080/api/articles";
 
-
 const Articles = {
     Create: async (Data: ModelArticle) => {
         return await Post(API_URL, Data);

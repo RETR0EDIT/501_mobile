@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useRouter } from "expo-router";
 import {
   View,
   Text,
@@ -7,19 +8,14 @@ import {
   ScrollView,
   StyleSheet,
 } from "react-native";
-
-import { useNavigation } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Accounts from "@/src/services/Accounts";
 
-const Login: React.FC = ({ navigation }) => {
-  const [loginData, setLoginData] = useState({
-    login: "",
-    password: "",
-  });
+const Login: React.FC = () => {
+  const router = useRouter(); // ✅ Déclaré à l'intérieur du composant
+  const [loginData, setLoginData] = useState({ login: "", password: "" });
   const [message, setMessage] = useState("");
   const titleRef = useRef(null);
-  navigation = useNavigation();
 
   const handleChange = (name: string, value: string) => {
     setLoginData({ ...loginData, [name]: value });
@@ -33,8 +29,7 @@ const Login: React.FC = ({ navigation }) => {
         await AsyncStorage.setItem("userId", response.id);
         await AsyncStorage.setItem("userRole", response.role);
 
-        // Rediriger vers le composant Home après une connexion réussie
-        navigation.navigate("home");
+        router.push("/home"); // ✅ Utilisation correcte de la navigation
       } else {
         setMessage("Erreur lors de la connexion");
         console.log("Réponse de l'API", response);
@@ -44,13 +39,6 @@ const Login: React.FC = ({ navigation }) => {
       console.error("Erreur lors de la connexion", err);
     }
   };
-
-  useEffect(() => {
-    const titleElement = titleRef.current;
-    if (titleElement && titleElement.scrollHeight > titleElement.clientHeight) {
-      titleElement.classList.add("shrink");
-    }
-  }, []);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -111,7 +99,6 @@ const styles = StyleSheet.create({
   },
   welcomeSection: {
     alignItems: "center",
-
     padding: 20,
     backgroundColor: "#432683",
   },
@@ -120,13 +107,11 @@ const styles = StyleSheet.create({
   },
   title: {
     color: "#fff",
-    fontFamily: "TT Norms Pro Regular",
     fontSize: 24,
     textAlign: "center",
   },
   welcomeTxt: {
     color: "#fff",
-    fontFamily: "TT Norms Pro Regular",
     fontSize: 18,
     textAlign: "center",
   },
@@ -155,7 +140,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   loginSpan: {
-    fontFamily: "TT Norms Pro Regular",
     color: "#432683",
     marginBottom: 5,
   },

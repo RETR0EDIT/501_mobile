@@ -5,46 +5,64 @@ import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 export default function Apropos() {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: "#fff" }]}>
-      <ScrollView contentContainerStyle={[styles.content, { backgroundColor: "#fff" }]}>
+      <ScrollView
+        contentContainerStyle={[styles.content, { backgroundColor: "#fff" }]}
+      >
         <View style={styles.section}>
           <Text style={styles.title}>À propos de l'IUT</Text>
           <Text style={styles.text}>
-            L’IUT de Meaux, affilié à l’Université Gustave Eiffel, est un établissement d’enseignement supérieur au cœur de l’Île-de-France. Il offre un cadre moderne et dynamique, idéal pour développer des compétences pratiques et théoriques dans divers domaines.
+            L’IUT de Meaux, affilié à l’Université Gustave Eiffel, est un
+            établissement d’enseignement supérieur au cœur de l’Île-de-France.
+            Il offre un cadre moderne et dynamique, idéal pour développer des
+            compétences pratiques et théoriques dans divers domaines.
           </Text>
           <Text style={styles.text}>
-            Sa mission : former des étudiants pour devenir des professionnels qualifiés et polyvalents grâce à des projets concrets et une pédagogie innovante. L’approche professionnalisante de l’IUT, ses infrastructures modernes, et ses liens avec le monde de l’entreprise en font un choix idéal pour réussir.
+            Sa mission : former des étudiants pour devenir des professionnels
+            qualifiés et polyvalents grâce à des projets concrets et une
+            pédagogie innovante. L’approche professionnalisante de l’IUT, ses
+            infrastructures modernes, et ses liens avec le monde de l’entreprise
+            en font un choix idéal pour réussir.
           </Text>
           <Text style={styles.text2}>
             Rejoindre l’IUT de Meaux, c’est opter pour :
           </Text>
           <Text style={styles.text3}>
             {"- Une formation adaptée aux besoins actuels.\n"}
-            {"- Un accompagnement personnalisé dans un environnement à taille humaine.\n"}
+            {
+              "- Un accompagnement personnalisé dans un environnement à taille humaine.\n"
+            }
             {"- De multiples opportunités professionnelles et académiques."}
           </Text>
         </View>
-      
-      
+
         <View style={styles.section2}>
           <Text style={styles.title2}>Informations pratiques :</Text>
           <Text style={styles.text}>
-            L’IUT de Meaux, affilié à l’Université Gustave Eiffel, est un établissement d’enseignement supérieur au cœur de l’Île-de-France. Il offre un cadre moderne et dynamique, idéal pour développer des compétences pratiques et théoriques dans divers domaines.
+            L’IUT de Meaux, affilié à l’Université Gustave Eiffel, est un
+            établissement d’enseignement supérieur au cœur de l’Île-de-France.
+            Il offre un cadre moderne et dynamique, idéal pour développer des
+            compétences pratiques et théoriques dans divers domaines.
           </Text>
           <Text style={styles.text}>
-            Sa mission : former des étudiants pour devenir des professionnels qualifiés et polyvalents grâce à des projets concrets et une pédagogie innovante. L’approche professionnalisante de l’IUT, ses infrastructures modernes, et ses liens avec le monde de l’entreprise en font un choix idéal pour réussir.
+            Sa mission : former des étudiants pour devenir des professionnels
+            qualifiés et polyvalents grâce à des projets concrets et une
+            pédagogie innovante. L’approche professionnalisante de l’IUT, ses
+            infrastructures modernes, et ses liens avec le monde de l’entreprise
+            en font un choix idéal pour réussir.
           </Text>
           <Text style={styles.text2}>
             Rejoindre l’IUT de Meaux, c’est opter pour :
           </Text>
           <Text style={styles.text3}>
             {"- Une formation adaptée aux besoins actuels.\n"}
-            {"- Un accompagnement personnalisé dans un environnement à taille humaine.\n"}
+            {
+              "- Un accompagnement personnalisé dans un environnement à taille humaine.\n"
+            }
             {"- De multiples opportunités professionnelles et académiques."}
           </Text>
         </View>
-        </ScrollView>
+      </ScrollView>
     </SafeAreaView>
-    
   );
 }
 
@@ -53,9 +71,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
   },
-  content: {
-  
-  },
+  content: {},
   section: {
     marginBottom: 20,
   },
@@ -98,5 +114,5 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: "bold",
     color: "#fff",
-    },
+  },
 });
