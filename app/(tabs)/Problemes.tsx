@@ -4,6 +4,7 @@ import {
   Text,
   TouchableOpacity,
   FlatList,
+  Image,
   StyleSheet,
   ActivityIndicator,
   Alert,
@@ -52,20 +53,26 @@ export default function Problemes() {
   };
 
   const renderTestItem = ({ item }: any) => (
-    <TouchableOpacity
-      style={styles.testItem}
-      onPress={() =>
-        navigation.navigate("TemplateTest", {
-          idTest: item.id,
-          testName: item.title,
-          content: item.content,
-        })
-      }
-    >
+    <View style={styles.testItem}>
       <Text style={styles.testTitle}>{item.title}</Text>
       <Text style={styles.testCustomText}>{item.content}</Text>
-    </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate("TemplateTest", {
+            idTest: item.id,
+            testName: item.title,
+            content: item.content,
+          })
+        }
+      >
+        <Image
+          source={require("../../assets/images/FLECHEDROITE.png")}
+          style={styles.arrowright} // Remplace par le chemin correct de ton image
+        />
+      </TouchableOpacity>
+    </View>
   );
+  
 
   if (loading) {
     return (
@@ -86,7 +93,9 @@ export default function Problemes() {
 
   return (
     <View style={styles.container}>
+      <View style={styles.titleContainer}>
       <Text style={styles.title}>CHOISIS TON QUIZZ</Text>
+      </View>
       <View style={styles.filterContainer}>
         <TouchableOpacity
           style={[
@@ -144,9 +153,20 @@ export default function Problemes() {
 }
 
 const styles = StyleSheet.create({
+  titleContainer: {
+    width: "100%",
+    borderWidth: 1,
+    borderColor: "#ccc",
+    backgroundColor: "#fff",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 5, // Ombre pour Android
+  },
+  
   container: {
     flex: 1,
-    padding: 20,
     backgroundColor: "#f5f5f5",
   },
 
@@ -185,16 +205,21 @@ const styles = StyleSheet.create({
   testCustomText: {
     fontSize: 14,
     color: "#666",
+    maxWidth: 380, 
+    textAlign: "center",
   },
+  
   problemeContainer: {
     flex: 1,
     backgroundColor: "#fff",
   },
   title: {
     fontSize: 24,
-    marginBottom: 20,
+    marginBottom: 40,
     textAlign: "center",
     color: "#432683",
+    fontWeight: "bold",
+    marginTop: 40,
   },
   loading: {
     fontSize: 18,
@@ -215,11 +240,15 @@ const styles = StyleSheet.create({
     gap: 20,
     padding: 10,
   },
+  arrowright:{
+
+    marginTop: 10,
+  },
   testItem: {
     marginBottom: 20,
     padding: 20,
     borderWidth: 1,
-    borderColor: "#ddd",
+    borderColor: "#542B97",
     borderRadius: 4,
     backgroundColor: "#fff",
     shadowColor: "#000",
