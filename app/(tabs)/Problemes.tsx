@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
-    elevation: 5, // Ombre pour Android
+    elevation: 5,
   },
   
   container: {
@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
   },
   testCustomText: {
     fontSize: 14,
-    color: "#666",
+    color: "",
     maxWidth: 380, 
     textAlign: "center",
   },
@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
   },
   arrowright:{
 
-    marginTop: 10,
+    marginTop: 30,
   },
   testItem: {
     marginBottom: 20,
@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f1f1f1",
   },
   testTitle: {
-    fontSize: 20,
+    fontSize: 35,
     color: "#432683",
     textAlign: "center",
     marginBottom: 10,

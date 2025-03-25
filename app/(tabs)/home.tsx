@@ -96,7 +96,7 @@ const Home = () => {
           <View style={styles.iutChiffresColumn}>
             <Text style={styles.iutChiffresNumber}>2211 ETUDIANTS</Text>
             <Text style={styles.iutChiffresText}>
-              répartis sur les sites de Champs-sur-Marne et de Meaux
+              Répartis sur les sites de Champs-sur-Marne et de Meaux
             </Text>
           </View>
           <Text style={styles.iutChiffresTitle}>Personnels enseignants</Text>
