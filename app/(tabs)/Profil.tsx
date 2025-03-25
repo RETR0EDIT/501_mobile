@@ -1,74 +1,41 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator, Image, TouchableOpacity, TextInput, Alert } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as ImagePicker from 'expo-image-picker';
-import { Ionicons } from '@expo/vector-icons';
-// import axios from 'axios';
-
-interface ProfileData {
-    id: number;
-    login: string;
-    password: string;
-    firstname: string;
-    lastname: string;
-    city: string;
-    study: string;
-    status: string;
-    role: string;
-    phone: string;
-    phoneType: string;
-    currentstudy: string;
-    image: string;
-    createdat: Date;
-    editedat: Date;
-    valid: boolean;
-    date: Date;
-    token: string;
-    validtoken: boolean;
-  }
-
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ActivityIndicator,
+  Image,
+  TouchableOpacity,
+  TextInput,
+  Alert,
+} from "react-native";
+import * as ImagePicker from "expo-image-picker";
+import { Ionicons } from "@expo/vector-icons";
+import ModelAccount from "@/src/models/ModelAccount";
+import Accounts from "@/src/services/Accounts";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const Profil = () => {
-  const [profileData, setProfileData] = useState<ProfileData | null>(null);
+  const [profileData, setProfileData] = useState<ModelAccount | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<unknown>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editedData, setEditedData] = useState({
-    login: '',
-    password: '',
-    phone: '',
+    login: "",
+    password: "",
+    phone: "",
   });
 
   useEffect(() => {
     const loadProfileData = async () => {
       try {
-        const storedProfileData = await AsyncStorage.getItem('profileData');
-        if (storedProfileData) {
-          setProfileData(JSON.parse(storedProfileData));
+        // Récupérer l'userId depuis AsyncStorage
+        const userId = await AsyncStorage.getItem("userId");
+        if (userId) {
+          // Utiliser l'userId pour effectuer la requête API
+          const response = await Accounts.ReadOne(userId);
+          setProfileData(response);
         } else {
-          // Set default profile data if none is stored
-          const defaultProfileData = {
-            id: 1,
-            login: 'john.doe@example.com',
-            password: 'password',
-            firstname: 'John',
-            lastname: 'Doe',
-            city: 'Paris',
-            study: 'Computer Science',
-            status: 'Active',
-            role: 'Student',
-            phone: '1234567890',
-            phoneType: 'Mobile',
-            currentstudy: 'Masters',
-            image: 'https://via.placeholder.com/150',
-            createdat: new Date(),
-            editedat: new Date(),
-            valid: true,
-            date: new Date(),
-            token: 'token',
-            validtoken: true,
-          };
-          setProfileData(defaultProfileData);
-          await AsyncStorage.setItem('profileData', JSON.stringify(defaultProfileData));
+          throw new Error("Aucun userId trouvé dans AsyncStorage");
         }
       } catch (err) {
         setError(err);
@@ -80,24 +47,25 @@ const Profil = () => {
     loadProfileData();
   }, []);
 
-  const saveProfileData = async (data: ProfileData) => {
+  const saveProfileData = async (data: ModelAccount) => {
     try {
-      await AsyncStorage.setItem('profileData', JSON.stringify(data));
+      await Accounts.Update(data);
+      Alert.alert("Succès", "Profil mis à jour avec succès");
     } catch (err) {
       setError(err);
+      Alert.alert("Erreur", "Impossible de mettre à jour le profil");
     }
   };
 
   const pickImage = async () => {
-    
-    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    const permissionResult =
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
 
     if (permissionResult.granted === false) {
-      alert("Permission to access gallery is required!");
+      alert("Permission d'accès à la galerie requise !");
       return;
     }
 
-    
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
@@ -107,7 +75,10 @@ const Profil = () => {
 
     if (!result.canceled) {
       if (profileData) {
-        const updatedProfileData = { ...profileData, image: result.assets[0].uri };
+        const updatedProfileData = {
+          ...profileData,
+          image: result.assets[0].uri,
+        };
         setProfileData(updatedProfileData);
         saveProfileData(updatedProfileData);
       }
@@ -117,9 +88,9 @@ const Profil = () => {
   const handleEdit = () => {
     setIsEditing(true);
     setEditedData({
-      login: profileData?.login || '',
-      password: profileData?.password || '',
-      phone: profileData?.phone || '',
+      login: profileData?.login || "",
+      password: profileData?.password || "",
+      phone: profileData?.phone || "",
     });
   };
 
@@ -135,7 +106,6 @@ const Profil = () => {
       saveProfileData(updatedProfileData);
     }
     setIsEditing(false);
-    Alert.alert("Success", "Profile updated successfully");
   };
 
   const handleCancel = () => {
@@ -149,7 +119,9 @@ const Profil = () => {
   if (error) {
     return (
       <View style={styles.container}>
-        <Text style={styles.errorText}>Erreur lors du chargement des données</Text>
+        <Text style={styles.errorText}>
+          Erreur lors du chargement des données
+        </Text>
       </View>
     );
   }
@@ -162,7 +134,9 @@ const Profil = () => {
             <TouchableOpacity onPress={pickImage}>
               <Image source={{ uri: profileData.image }} style={styles.image} />
             </TouchableOpacity>
-            <Text style={styles.name}>{profileData.firstname} {profileData.lastname}</Text>
+            <Text style={styles.name}>
+              {profileData.firstname} {profileData.lastname}
+            </Text>
             <View style={styles.dividerBar} />
             <Text style={styles.role}>{profileData.role}</Text>
           </View>
@@ -180,7 +154,9 @@ const Profil = () => {
                   <TextInput
                     style={styles.detailText}
                     value={editedData.login}
-                    onChangeText={(text) => setEditedData({ ...editedData, login: text })}
+                    onChangeText={(text) =>
+                      setEditedData({ ...editedData, login: text })
+                    }
                   />
                 ) : (
                   <Text style={styles.detailText}>{profileData.login}</Text>
@@ -192,7 +168,9 @@ const Profil = () => {
                   <TextInput
                     style={styles.detailText}
                     value={editedData.password}
-                    onChangeText={(text) => setEditedData({ ...editedData, password: text })}
+                    onChangeText={(text) =>
+                      setEditedData({ ...editedData, password: text })
+                    }
                     secureTextEntry
                   />
                 ) : (
@@ -205,7 +183,9 @@ const Profil = () => {
                   <TextInput
                     style={styles.detailText}
                     value={editedData.phone}
-                    onChangeText={(text) => setEditedData({ ...editedData, phone: text })}
+                    onChangeText={(text) =>
+                      setEditedData({ ...editedData, phone: text })
+                    }
                   />
                 ) : (
                   <Text style={styles.detailText}>{profileData.phone}</Text>
@@ -214,11 +194,17 @@ const Profil = () => {
             </View>
             {isEditing && (
               <View style={styles.editButtons}>
-                <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
-                  <Text style={styles.buttonText}>Save</Text>
+                <TouchableOpacity
+                  style={styles.saveButton}
+                  onPress={handleSave}
+                >
+                  <Text style={styles.buttonText}>Enregistrer</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.cancelButton} onPress={handleCancel}>
-                  <Text style={styles.buttonText}>Cancel</Text>
+                <TouchableOpacity
+                  style={styles.cancelButton}
+                  onPress={handleCancel}
+                >
+                  <Text style={styles.buttonText}>Annuler</Text>
                 </TouchableOpacity>
               </View>
             )}
@@ -233,81 +219,81 @@ const Profil = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, 
-    width: '100%', 
-    alignItems: 'center',
+    flex: 1,
+    width: "100%",
+    alignItems: "center",
   },
   profileContainer: {
-    backgroundColor: '#432683',
-    alignItems: 'center',
+    backgroundColor: "#432683",
+    alignItems: "center",
     padding: 16,
     marginBottom: 16,
-    width: '100%', 
+    width: "100%",
   },
   accountContainer: {
-    backgroundColor: '#583E92',
-    width: '100%',
+    backgroundColor: "#583E92",
+    width: "100%",
     padding: 16,
-    alignItems: 'center',
+    alignItems: "center",
   },
   accountHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: '100%',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
   },
   accountTitle: {
     fontSize: 40,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 40,
-    color: '#fff',
+    color: "#fff",
   },
   detailsGrid: {
-    width: '100%',
+    width: "100%",
   },
   detailItem: {
     borderWidth: 1,
-    borderColor: '#fff',
+    borderColor: "#fff",
     borderRadius: 8,
     padding: 20,
     marginBottom: 35,
   },
   detailLabel: {
-    position: 'absolute',
+    position: "absolute",
     top: -12,
     left: 15,
-    backgroundColor: '#583E92',
+    backgroundColor: "#583E92",
     paddingHorizontal: 8,
-    color: '#fff',
+    color: "#fff",
     fontSize: 20,
   },
   detailText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
   },
   editButtons: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginTop: 20,
   },
   saveButton: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: "#4CAF50",
     padding: 10,
     borderRadius: 5,
     marginRight: 10,
   },
   cancelButton: {
-    backgroundColor: '#f44336',
+    backgroundColor: "#f44336",
     padding: 10,
     borderRadius: 5,
   },
   buttonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 16,
   },
   image: {
@@ -316,23 +302,23 @@ const styles = StyleSheet.create({
     borderRadius: 75,
     marginBottom: 8,
     borderWidth: 1,
-    borderColor: '#fff',
+    borderColor: "#fff",
   },
   name: {
     fontSize: 20,
-    fontWeight: 'bold',
-    color: '#fff',
+    fontWeight: "bold",
+    color: "#fff",
     marginBottom: 4,
   },
   dividerBar: {
     width: 150,
     height: 2,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     marginVertical: 10,
   },
   role: {
     fontSize: 18,
-    color: '#fff',
+    color: "#fff",
   },
   label: {
     fontSize: 18,
@@ -340,7 +326,7 @@ const styles = StyleSheet.create({
   },
   errorText: {
     fontSize: 18,
-    color: 'red',
+    color: "red",
   },
 });
 

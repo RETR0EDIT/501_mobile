@@ -9,8 +9,8 @@ import {
 import { useRoute } from "@react-navigation/native";
 import Questions from "@/src/services/Questions";
 import Answers from "@/src/services/Answers";
-import ModelQuestion from "@/src/models/ModelQuestion";
-import ModelAnswers from "@/src/models/ModelAnswers";
+import ModelQuestion from "@/app/models/ModelQuestion";
+import ModelAnswers from "@/app/models/ModelAnswers";
 
 const TemplateTest: React.FC = () => {
   const route = useRoute();

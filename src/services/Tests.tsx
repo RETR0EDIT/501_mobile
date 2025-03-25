@@ -2,7 +2,7 @@ import Delete from "./CRUD/Delete";
 import Get from "./CRUD/Get";
 import Post from "./CRUD/Post";
 import Put from "./CRUD/Put";
-import ModelTest from "../models/ModelTest";
+import ModelTest from "../../app/models/ModelTest";
 const API_URL = "http://localhost:8080/api/tests";
 
 const Tests = {
@@ -13,14 +13,14 @@ const Tests = {
     const tests = await Get(`${API_URL}/study/${study}`);
     return tests.map((test: ModelTest) => ({
       ...test,
-      description: test.content // Utilise le texte personnalisé spécifique
+      description: test.content, // Utilise le texte personnalisé spécifique
     }));
   },
   Read: async () => {
     const tests = await Get(API_URL);
     return tests.map((test: ModelTest) => ({
       ...test,
-      description: test.content // Utilise le texte personnalisé spécifique
+      description: test.content, // Utilise le texte personnalisé spécifique
     }));
   },
   Update: async (Data: ModelTest) => {

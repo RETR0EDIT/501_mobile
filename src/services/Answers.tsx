@@ -2,7 +2,7 @@ import Delete from "./CRUD/Delete";
 import Get from "./CRUD/Get";
 import Post from "./CRUD/Post";
 import Put from "./CRUD/Put";
-import ModelAnswers from "../models/ModelAnswers";
+import ModelAnswers from "../../app/models/ModelAnswers";
 
 const API_URL = "http://localhost:8080/api/answers";
 
@@ -28,4 +28,3 @@ const Answers = {
 };
 
 export default Answers;
-
