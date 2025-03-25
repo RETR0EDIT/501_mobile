@@ -58,11 +58,12 @@ export default function Problemes() {
         navigation.navigate("TemplateTest", {
           idTest: item.id,
           testName: item.title,
+          content: item.content,
         })
       }
     >
       <Text style={styles.testTitle}>{item.title}</Text>
-      <Text style={styles.testCustomText}>{item.customText}</Text>
+      <Text style={styles.testCustomText}>{item.content}</Text>
     </TouchableOpacity>
   );
 

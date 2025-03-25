@@ -41,33 +41,17 @@ const Conference = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Conférences</Text>
+            <Text style={styles.confTitle}>CONFERENCES</Text>
             <FlatList
                 data={ConferencesList}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (
                     <View style={styles.conf}>
                         <Text style={styles.confTitle}>{item.title}</Text>
-                        <View style={styles.infoContainer}>
-                            <Text style={styles.text}>Salle :</Text>
-                            <Text style={styles.info}>{item.room.name}</Text>
-                        </View>
-                        <View style={styles.infoContainer}>
-                            <Text style={styles.text}>Heure début :</Text>
-                            <Text style={styles.info}>{item.tstart}</Text>
-                        </View>
-                        <View style={styles.infoContainer}>
-                            <Text style={styles.text}>Heure fin :</Text>
-                            <Text style={styles.info}>{item.tend}</Text>
-                        </View>
-                        <View style={styles.infoContainer}>
-                            <Text style={styles.text}>Maître de conférence :</Text>
-                            <Text style={styles.info}>{item.account.firstname} {item.account.lastname}</Text>
-                        </View>
-                        <View style={styles.infoContainer}>
-                            <Text style={styles.text}>Maître de conférence :</Text>
-                            <Text style={styles.info}>{item.content}</Text>
-                        </View>
+                        <Text style={styles.text}>Salle : {item.room.name}</Text>
+                        <Text style={styles.text}>Horaire : {item.tstart} - {item.tend}</Text>
+                        <Text style={styles.confContent}>{item.content}</Text>
+                        <Text style={styles.confMaster}>{item.account.firstname} {item.account.lastname}</Text>
                     </View>
                 )}
             />
@@ -80,13 +64,6 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#fff",
         padding: 15,
-    },
-    title: {
-        fontSize: 26,
-        fontWeight: "bold",
-        color: "#432683",
-        marginBottom: 20,
-        textAlign: "center",
     },
     loading: {
         flex: 1,
@@ -109,27 +86,35 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         borderWidth: 1,
         borderColor: '#000',
-
+        alignItems: "center",
     },
     confTitle: {
-        fontSize: 20,
+        fontSize: 24,
         fontWeight: "bold",
         color: "#432683",
+        textAlign: "center",
         marginBottom: 10,
-    },
-    infoContainer: {
-        flexDirection: "row",
-        alignItems: "center",
-        marginBottom: 5,
     },
     text: {
         fontWeight: "bold",
         color: "#432683",
-        marginRight: 5,
     },
     info: {
         fontSize: 16,
         color: "#333",
+        marginBottom: 5,
+    },
+    confContent: {
+        fontSize: 16,
+        color: "#333",
+        textAlign: "center",
+        marginVertical: 10,
+    },
+    confMaster: {
+        fontSize: 18,
+        color: "#432683",
+        alignSelf: "flex-end",
+        fontWeight: "bold",
     },
 });
 
