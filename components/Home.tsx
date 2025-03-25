@@ -17,7 +17,7 @@ const Home = () => {
       <View style={styles.jpoSection}>
         <View style={styles.jpoContent}>
           <View style={styles.jpoHeader}>
-            <Text style={styles.jpoTitle}>JOURNÉE PORTE OUVERTE</Text>
+            <Text style={styles.jpoTitle}>caca PORTE OUVERTE</Text>
           </View>
           <Text style={styles.jpoDate}>14 avril 2025</Text>
           <View style={styles.jpoActions}>
@@ -155,6 +155,11 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   aproposContentLeft: {
+    marginBottom: 20,
+  },
+  aproposContentRight: {
+    alignItems: "center", 
+    justifyContent: "center",
     marginBottom: 20,
   },
   aproposHeader: {
