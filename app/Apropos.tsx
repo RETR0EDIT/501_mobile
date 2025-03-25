@@ -5,23 +5,25 @@ import { SafeAreaView, ScrollView, StyleSheet, Image } from "react-native";
 export default function Apropos() {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: "#fff" }]}>
-      <ScrollView contentContainerStyle={[styles.content, { backgroundColor: "#fff" }]}>
+      <ScrollView
+        contentContainerStyle={[styles.content, { backgroundColor: "#fff" }]}
+      >
         <View style={styles.backgroundimage}>
-          <Image 
-            source={require("../../assets/images/background_home.png")}
+          <Image
+            source={require("../assets/images/background_home.png")}
             style={styles.image}
           />
           <View style={styles.apropos}>
             <Text style={styles.titlep}>À PROPOS</Text>
             <Text style={styles.textp}>
-            {"L'iut ?\n"}
-            {"Informations pratiques ?\n"}
-            {"Plan d'accès ?"}
+              {"L'iut ?\n"}
+              {"Informations pratiques ?\n"}
+              {"Plan d'accès ?"}
             </Text>
-            <Image 
-            source={require("../../assets/images/logo_univ3d.png")}
-            style={styles.image2}
-          />
+            <Image
+              source={require("../assets/images/logo_univ3d.png")}
+              style={styles.image2}
+            />
           </View>
         </View>
 
@@ -45,9 +47,10 @@ export default function Apropos() {
           </Text>
           <Text style={styles.text3}>
             {"- Une formation adaptée aux besoins actuels.\n"}
-            {"- Un accompagnement personnalisé dans un environnement à taille humaine.\n"}
+            {
+              "- Un accompagnement personnalisé dans un environnement à taille humaine.\n"
+            }
             {"- De multiples opportunités professionnelles et académiques."}
-            
           </Text>
         </View>
 
@@ -61,10 +64,14 @@ export default function Apropos() {
           </Text>
           <Text style={styles.textc}>Horaires d'ouverture :</Text>
           <Text style={styles.textc1}>
-            {"- Du lundi au jeudi de 9h30 à 12h30 et de 14h00 à 16h30 et le vendredi de 9h30 à 12h30\n"}
+            {
+              "- Du lundi au jeudi de 9h30 à 12h30 et de 14h00 à 16h30 et le vendredi de 9h30 à 12h30\n"
+            }
             {"Samedi et dimanche fermé\n"}
           </Text>
-          <Text style={styles.text2}>Rejoindre l’IUT de Meaux, c’est opter pour :</Text>
+          <Text style={styles.text2}>
+            Rejoindre l’IUT de Meaux, c’est opter pour :
+          </Text>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -94,20 +101,19 @@ const styles = StyleSheet.create({
     bottom: 10,
     right: 10,
   },
-  apropos:{
+  apropos: {
     backgroundColor: "#432683",
     position: "absolute",
     top: 200,
     left: 50,
     width: "59%",
   },
-  titlep:{
+  titlep: {
     color: "#fff",
     fontSize: 25,
     margin: 10,
-
   },
-  textp:{
+  textp: {
     color: "#fff",
     margin: 10,
     fontSize: 15,
