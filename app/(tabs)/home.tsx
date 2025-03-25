@@ -1,17 +1,38 @@
-import React from "react";
+import React, { useState, useRef} from "react";
 import {
   View,
   Text,
   Image,
+  Linking,
   TouchableOpacity,
   ScrollView,
   StyleSheet,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import Apropos from "../Apropos";
+
 
 const Home = () => {
   const navigation = useNavigation();
+  const [isImageExpanded, setIsImageExpanded] = useState(false);
+
+  const scrollViewRef = useRef<ScrollView>(null);
+  const formationRef = useRef<View>(null);
+
+  const scrollToFormation = () => {
+    formationRef.current?.measure((fx, fy, width, height, px, py) => {
+      scrollViewRef.current?.scrollTo({ y: py, animated: true });
+    });
+  };
+
+  const openLink = (url) => {
+    Linking.openURL(url).catch((err) =>
+      console.error("An error occurred", err)
+    );
+  };
+
+  const handleImagePress = () => {
+    setIsImageExpanded(!isImageExpanded);
+  };
 
   return (
     <ScrollView style={styles.container}>
@@ -37,7 +58,7 @@ const Home = () => {
             <Text style={styles.jpoDate}>14 avril 2025</Text>
           </View>
           <TouchableOpacity
-            onPress={() => navigation.navigate("Apropos")}
+            onPress={scrollToFormation}
             style={styles.jpoButton}
           >
             <Text style={styles.jpoButtonText}>Découvrir l'IUT</Text>
@@ -123,16 +144,74 @@ const Home = () => {
         </View>
       </View>
 
-
       {/* 5. Section Comment Nous Rejoindre */}
       <View style={styles.rejoindreContainer}>
-
-
+        <Text style={styles.rejoindreTitle}>Comment nous rejoindre ?</Text>
+        <View style={styles.rejoindreInfos}>
+          <Text style={styles.rejoindreText}>
+            Adresse : 17 Rue Jablinot, 77100 Meaux
+          </Text>
+          <Text style={styles.rejoindreTextTitle}>En transport : </Text>
+          <Text style={styles.rejoindreText}>
+            {"• Train : Ligne P, Gare de Meaux\n"}
+            {"• Bus : Ligne 3, arrêt Médiathèque\n"}
+          </Text>
+          <Text style={styles.rejoindreTextTitle}>En voiture : </Text>
+          <Text style={styles.rejoindreText}>
+            {
+              "• De Paris : Autoroute A4, sortie Val d'Europe puis direction Chessy-Magny Le Hongre - Meaux\n"
+            }
+            {"• De la Francilienne : sortie Claye-Souilly - Meaux\n"}
+          </Text>
+          <TouchableOpacity>
+            <Image
+              source={require("../../assets/images/carte2.png")}
+              style={
+                isImageExpanded
+                  ? styles.rejoindreImageExpanded
+                  : styles.rejoindreImage
+              }
+            ></Image>
+          </TouchableOpacity>
+        </View>
       </View>
 
-      
+      <View style={styles.visitContainer}>
+        {/* Fond violet avec logo Eiffel */}
+        <Image
+          source={require("../../assets/images/background_logo_eiffel.png")}
+          style={styles.visitBackgroundImage}
+          resizeMode="cover"
+        />
+
+        <View style={styles.visitContent}>
+          <Text style={styles.visitTitle}>Visite Virtuelle</Text>
+          <Text style={styles.visitText}>
+            En vue de notre Journée Portes Ouvertes, plongez dans une visite
+            virtuelle immersive pour découvrir tout ce qui vous attend à l’IUT
+            de Meaux. Familiarisez-vous avec nos locaux, explorez les salles de
+            cours, fond vert, réalité virtuelle, et les espaces étudiants avant
+            même de venir sur place.
+          </Text>
+
+          <View style={styles.visitButtonContainer}>
+            <TouchableOpacity
+              style={styles.visitButton}
+              onPress={() => navigation.navigate("VisiteVirtuelle")}
+            >
+              <Text style={styles.visitButtonText}>En savoir plus</Text>
+            </TouchableOpacity>
+
+            <Image
+              source={require("../../assets/images/visite_virtuelle.png")}
+              style={styles.visitIllustration}
+            />
+          </View>
+        </View>
+      </View>
+
       {/* 6. Section Formations  */}
-      <View style={styles.formationSection}>
+      <View ref={formationRef} style={styles.formationSection}>
         <Text style={styles.sectionTitle}>Nos formations</Text>
 
         {/* Carte MMI */}
@@ -187,38 +266,54 @@ const Home = () => {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.visitContainer}>
-        {/* Fond violet avec logo Eiffel */}
-        <Image
-          source={require("../../assets/images/background_logo_eiffel.png")}
-          style={styles.visitBackgroundImage}
-          resizeMode="cover"
-        />
-
-        <View style={styles.visitContent}>
-          <Text style={styles.visitTitle}>Visite Virtuelle</Text>
-          <Text style={styles.visitText}>
-            En vue de notre Journée Portes Ouvertes, plongez dans une visite
-            virtuelle immersive pour découvrir tout ce qui vous attend à l’IUT
-            de Meaux. Familiarisez-vous avec nos locaux, explorez les salles de
-            cours, fond vert, réalité virtuelle, et les espaces étudiants avant
-            même de venir sur place.
+      {/* 7. Section Informations Pratiques */}
+      <View style={styles.infosContainer}>
+      <Image
+            source={require("../../assets/images/background_logo_eiffel.png")}
+            style={styles.infosBackground}
+            resizeMode="cover"
+          />
+        <Text style={styles.infosTitle}>Informations pratiques :</Text>
+        <Text style={styles.infosText}>Coordonnées :</Text>
+        <Text style={styles.infosText1}>
+          {"• Adresse : 17 Rue Jablinot - BP 24, 77100 Meaux Cedex\n"}
+          {"• Tél. : 01 64 36 44 15\n"}
+          {"• Courriel : scolarite.iut@listes.univ-eiffel.fr"}
+        </Text>
+        <Text style={styles.infosText}>Horaires d'ouverture :</Text>
+        <Text style={styles.infosText1}>
+          {
+            "• Du lundi au jeudi de 9h30 à 12h30 et de 14h00 à 16h30 et le vendredi de 9h30 à 12h30\n"
+          }
+          {"• Samedi et dimanche fermé\n"}
+        </Text>
+        <Text style={styles.infosText}>Réseaux sociaux :</Text>
+        <Text style={styles.infosText2}>Suivez-nous pour les dernières actualités et évènemets :</Text>
+        <Text style={styles.infosText2}>
+         
+          <Text
+            style={styles.link}
+            onPress={() =>
+              openLink("https://www.facebook.com/profile.php?id=61563123371635")
+            }
+          >
+            • Facebook
           </Text>
-
-          <View style={styles.visitButtonContainer}>
-            <TouchableOpacity
-              style={styles.visitButton}
-              onPress={() => navigation.navigate("VisiteVirtuelle")}
-            >
-              <Text style={styles.visitButtonText}>En savoir plus</Text>
-            </TouchableOpacity>
-
-            <Image
-              source={require("../../assets/images/visite_virtuelle.png")}
-              style={styles.visitIllustration}
-            />
-          </View>
-        </View>
+          {"\n"}
+          <Text
+            style={styles.link}
+            onPress={() => openLink("https://www.instagram.com/universitegustaveeiffel/")}
+          >
+            • Instagram
+          </Text>
+          {"\n"}
+          <Text
+            style={styles.link}
+            onPress={() => openLink("https://www.linkedin.com/school/universit%C3%A9-gustave-eiffel/posts/?feedView=all")}
+          >
+            • LinkedIn
+          </Text>
+        </Text>
       </View>
     </ScrollView>
   );
@@ -380,20 +475,23 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     color: "#fff",
-    margin: 20,
+    margin: 10,
+    marginLeft: 55,
   },
   iutChiffresColumn: {
     borderWidth: 2,
     borderColor: "#fff",
     borderRadius: 45,
     width: "90%",
-    margin: "auto",
+    marginLeft: "auto",
+    marginRight: "auto",
+    marginBottom: 25,
   },
   visitTitle2: {
     fontSize: 26,
     fontWeight: "bold",
     color: "#fff",
-    marginBottom: 15,
+    marginBottom: 30,
   },
   iutChiffresRow: {},
 
@@ -410,6 +508,47 @@ const styles = StyleSheet.create({
     margin: "auto",
     padding: 20,
     textAlign: "center",
+  },
+
+  // 5. Section Comment Nous Rejoindre
+  rejoindreInfos: {
+    backgroundColor: "#fff",
+  },
+  rejoindreContainer: {
+    margin: 20,
+    marginTop: 30,
+  },
+  rejoindreText: {
+    fontSize: 16,
+    color: "#black",
+    lineHeight: 24,
+    marginBottom: 15,
+  },
+  rejoindreTitle: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#432683",
+    marginBottom: 25,
+    marginTop: 20,
+  },
+
+  rejoindreTextTitle: {
+    fontSize: 16,
+    color: "#black",
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+  rejoindreImage: {
+    width: "100%",
+    height: 250,
+    resizeMode: "contain",
+    marginBottom: 20,
+  },
+  rejoindreImageExpanded: {
+    width: "100%",
+    height: 400,
+    resizeMode: "contain",
+    marginBottom: 20,
   },
 
   // 6. Section Formations
@@ -450,7 +589,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
 
-  // 5. Section Visite Virtuelle
+  // 7. Section Visite Virtuelle
   visitContainer: {
     backgroundColor: "#583E92",
     paddingTop: 50,
@@ -516,6 +655,50 @@ const styles = StyleSheet.create({
     height: 150,
     marginBottom: -20,
     marginLeft: 50,
+  },
+  // 8. Section Informations Pratiques
+
+  infosText: {
+    padding: 10,
+    fontSize: 20,
+    color: "#fff",
+  },
+  infosText1: {
+    padding: 10,
+    fontSize: 15,
+    color: "#fff",
+    marginLeft: 20,
+    marginBottom: 20,
+  },
+  infosContainer: {
+    zIndex: -1,
+    backgroundColor: "#583E92",
+    width: "100%",
+    height: 670,
+    padding: 20,
+  },
+  infosTitle: {
+    padding: 10,
+    fontSize: 30,
+    marginBottom: 20,
+    marginTop: 40,
+    fontWeight: "bold",
+    color: "#fff",
+  },
+  infosText2: {
+    marginLeft: 30,
+    fontSize: 15,
+    color: "#fff",
+  },
+  infosBackground: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
+    transform: [{ scaleX: -1 }],
+    opacity: 0.5,
   },
 });
 
