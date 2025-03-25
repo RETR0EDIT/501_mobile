@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text, Image, ActivityIndicator } from "react-native";
 import Accounts from "@/src/services/Accounts";
 import { Upload } from "@/src/services/Upload";
-import ModelAccount from "@/src/models/ModelAccount";
+import ModelAccount from "@/app/models/ModelAccount";
 
 const ProfilsVisiteur: React.FC = () => {
   const [user, setUser] = useState<ModelAccount | null>(null);

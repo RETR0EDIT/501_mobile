@@ -2,7 +2,7 @@ import Delete from "./CRUD/Delete";
 import Get from "./CRUD/Get";
 import Post from "./CRUD/Post";
 import Put from "./CRUD/Put";
-import ModelRooms from "../models/ModelRooms";
+import ModelRooms from "../../app/models/ModelRooms";
 
 const API_URL = "http://localhost:8080/api/rooms";
 const Rooms = {

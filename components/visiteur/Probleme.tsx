@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, ActivityIndicator } from "react-native";
 import Tests from "@/src/services/Tests";
-import ModelTest from "@/src/models/ModelTest";
+import ModelTest from "@/app/models/ModelTest";
 import { useNavigation } from "@react-navigation/native";
 
 export default function Probleme() {

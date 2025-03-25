@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import Tests from "@/src/services/Tests";
 
 
-export default function Probleme() {
+export default function Problemes() {
     const [tests, setTests] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
