@@ -24,17 +24,12 @@ const Profil = () => {
     password: "",
     phone: "",
   });
-  const [completedTests, setCompletedTests] = useState<string[]>([]);
-
-  const navigation = useNavigation();
 
   useEffect(() => {
     const loadProfileData = async () => {
       try {
-        // Récupérer l'userId depuis AsyncStorage
         const userId = await AsyncStorage.getItem("userId");
         if (userId) {
-          // Utiliser l'userId pour effectuer la requête API
           const response = await Accounts.ReadOne(userId);
           setProfileData(response);
         } else {
@@ -46,7 +41,8 @@ const Profil = () => {
         setLoading(false);
       }
     };
-    fetchCompletedTests();
+
+    loadProfileData();
   }, []);
 
   const saveProfileData = async (data: ModelAccount) => {
@@ -105,6 +101,7 @@ const Profil = () => {
         phone: editedData.phone,
       };
       setProfileData(updatedProfileData);
+      saveProfileData(updatedProfileData);
     }
     setIsEditing(false);
   };
@@ -133,7 +130,10 @@ const Profil = () => {
         <>
           <View style={styles.profileContainer}>
             <TouchableOpacity onPress={pickImage}>
-              <Image source={{ uri: profileData.image }} style={styles.image} />
+              <Image
+                source={require("../../assets/images/default.png")}
+                style={styles.image}
+              />
             </TouchableOpacity>
             <Text style={styles.name}>
               {profileData.firstname} {profileData.lastname}
