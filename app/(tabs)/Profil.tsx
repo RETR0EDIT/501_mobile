@@ -24,6 +24,9 @@ const Profil = () => {
     password: "",
     phone: "",
   });
+  const [completedTests, setCompletedTests] = useState<string[]>([]);
+
+  const navigation = useNavigation();
 
   useEffect(() => {
     const loadProfileData = async () => {
@@ -43,8 +46,7 @@ const Profil = () => {
         setLoading(false);
       }
     };
-
-    loadProfileData();
+    fetchCompletedTests();
   }, []);
 
   const saveProfileData = async (data: ModelAccount) => {
@@ -103,7 +105,6 @@ const Profil = () => {
         phone: editedData.phone,
       };
       setProfileData(updatedProfileData);
-      saveProfileData(updatedProfileData);
     }
     setIsEditing(false);
   };
