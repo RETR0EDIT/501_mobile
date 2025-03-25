@@ -268,9 +268,11 @@ const TemplateTest: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <View style={styles.titleContainer}>
       <Text style={styles.testName}>{testName}</Text>
       <View style={styles.questionContainer}>
         <Text style={styles.questionTitle}>{currentQuestion.title}</Text>
+      </View>
       </View>
       <View style={styles.answersContainer}>
         <View style={styles.row}>
@@ -344,13 +346,28 @@ const styles = StyleSheet.create({
   testName: {
     fontSize: 24,
     fontWeight: "bold",
+    alignItems: "center",
+    marginTop: 20,
     marginBottom: 20,
+    marginLeft: 'auto',
+    marginRight: 'auto',
   },
   questionContainer: {
     width: "100%",
     alignItems: "center",
     marginBottom: 20,
   },
+  titleContainer: {
+    width: "100%",
+    borderWidth: 1,
+    borderColor: "#ccc",
+    backgroundColor: "#fff",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 5,
+    },
   questionTitle: {
     fontSize: 20,
     fontWeight: "bold",
@@ -366,6 +383,7 @@ const styles = StyleSheet.create({
   answerText: {
     color: "white",
     fontSize: 18,
+    margin: "auto",
     fontWeight: "bold",
   },
   answerImage: {

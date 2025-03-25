@@ -91,8 +91,10 @@ const Home = () => {
           style={styles.iutChiffresBackground}
         />
         <View style={styles.iutChiffresRow}>
-        <Text style={styles.visitTitle}>L'IUT en quelques chiffres</Text>
-        <Text style={styles.iutChiffresTitle}>Effectifs rentré 2023-2024</Text>
+          <Text style={styles.visitTitle2}>L'IUT en quelques chiffres</Text>
+          <Text style={styles.iutChiffresTitle}>
+            Effectifs rentré 2023-2024
+          </Text>
           <View style={styles.iutChiffresColumn}>
             <Text style={styles.iutChiffresNumber}>2211 ETUDIANTS</Text>
             <Text style={styles.iutChiffresText}>
@@ -121,7 +123,15 @@ const Home = () => {
         </View>
       </View>
 
-      {/* 4. Section Formations  */}
+
+      {/* 5. Section Comment Nous Rejoindre */}
+      <View style={styles.rejoindreContainer}>
+
+
+      </View>
+
+      
+      {/* 6. Section Formations  */}
       <View style={styles.formationSection}>
         <Text style={styles.sectionTitle}>Nos formations</Text>
 
@@ -355,7 +365,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  
+
   iutChiffresBackground: {
     position: "absolute",
     top: 0,
@@ -367,7 +377,7 @@ const styles = StyleSheet.create({
     transform: [{ scaleX: -1 }],
   },
   iutChiffresTitle: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: "bold",
     color: "#fff",
     margin: 20,
@@ -377,7 +387,13 @@ const styles = StyleSheet.create({
     borderColor: "#fff",
     borderRadius: 45,
     width: "90%",
-    margin: 'auto',
+    margin: "auto",
+  },
+  visitTitle2: {
+    fontSize: 26,
+    fontWeight: "bold",
+    color: "#fff",
+    marginBottom: 15,
   },
   iutChiffresRow: {},
 
@@ -386,17 +402,17 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#fff",
     paddingTop: 10,
-    margin: 'auto',
+    margin: "auto",
   },
   iutChiffresText: {
     fontSize: 16,
     color: "#fff",
-    margin: 'auto',
+    margin: "auto",
     padding: 20,
     textAlign: "center",
   },
-  
-  // 4. Section Formations
+
+  // 6. Section Formations
   formationSection: {
     padding: 20,
     marginHorizontal: 20,
