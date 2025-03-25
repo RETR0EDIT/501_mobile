@@ -7,6 +7,8 @@ import {
   ActivityIndicator,
   StyleSheet,
   FlatList,
+  ScrollView,
+  SafeAreaView,
 } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import Questions from "@/src/services/Questions";
@@ -21,6 +23,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 import ModelRate from "@/src/models/ModelRate";
 import Rates from "@/src/services/Rates";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 const TemplateTest: React.FC = () => {
   const navigation = useNavigation();
   const router = useRouter();
@@ -38,14 +41,13 @@ const TemplateTest: React.FC = () => {
   const [isTestAlreadyDone, setIsTestAlreadyDone] = useState<boolean>(false);
   const [userAnswers, setUserAnswers] = useState<ModelAnswers[]>([]);
 
-
   useEffect(() => {
-
-
-    const getUserAnswers = async (userID: string, QuestionResponse: ModelAnswers) => {
-      let userId = await AsyncStorage.getItem("userId")
+    const getUserAnswers = async (
+      userID: string,
+      QuestionResponse: ModelAnswers
+    ) => {
+      let userId = await AsyncStorage.getItem("userId");
       try {
-
         const userAnswersResponse = await Answers.ReadByUserId(userID);
 
         if (Array.isArray(userAnswersResponse)) {
@@ -57,8 +59,9 @@ const TemplateTest: React.FC = () => {
           const answeredQuestionsIds = testAnswers.map(
             (answer) => answer.question.id
           );
-          const allQuestionsAnswered = QuestionResponse.every((question: ModelQuestion) =>
-            answeredQuestionsIds.includes(question.id)
+          const allQuestionsAnswered = QuestionResponse.every(
+            (question: ModelQuestion) =>
+              answeredQuestionsIds.includes(question.id)
           );
 
           if (allQuestionsAnswered) {
@@ -66,7 +69,8 @@ const TemplateTest: React.FC = () => {
           } else {
             // Passer à la première question non répondue
             const firstUnansweredQuestionIndex = QuestionResponse.findIndex(
-              (question: ModelQuestion) => !answeredQuestionsIds.includes(question.id)
+              (question: ModelQuestion) =>
+                !answeredQuestionsIds.includes(question.id)
             );
             setCurrentQuestionIndex(firstUnansweredQuestionIndex);
           }
@@ -74,17 +78,17 @@ const TemplateTest: React.FC = () => {
           setError(
             "La réponse de l'API pour les réponses de l'utilisateur n'est pas un tableau."
           );
-        };
+        }
       } catch (err) {
-
-        setError("Erreur lors de la récupération des réponses de l'utilisateur." + userId);
+        setError(
+          "Erreur lors de la récupération des réponses de l'utilisateur." +
+            userId
+        );
       }
     };
 
     const getQuestions = async () => {
-
       try {
-
         const response = await Questions.Read(idTest);
         if (Array.isArray(response)) {
           setQuestions(response);
@@ -92,11 +96,8 @@ const TemplateTest: React.FC = () => {
           setError("La réponse de l'API n'est pas un tableau.");
         }
 
-        let userId = await AsyncStorage.getItem("userId")
+        let userId = await AsyncStorage.getItem("userId");
         if (userId) getUserAnswers(userId, response);
-
-
-
       } catch (err) {
         setError("Erreur lors de la récupération des questions.");
       } finally {
@@ -111,7 +112,7 @@ const TemplateTest: React.FC = () => {
     const currentQuestion = questions[currentQuestionIndex];
     setAnswered(true);
     const isCorrect = selectedAnswer === currentQuestion.pr;
-    let userId = await AsyncStorage.getItem("userId")
+    let userId = await AsyncStorage.getItem("userId");
 
     const answer: ModelAnswers = {
       id: 0,
@@ -140,7 +141,7 @@ const TemplateTest: React.FC = () => {
   const handleFinishTest = async () => {
     console.log("Test terminé !");
     setIsTestFinished(true);
-    let userId = await AsyncStorage.getItem("userId")
+    let userId = await AsyncStorage.getItem("userId");
     const rate: ModelRate = {
       id: 0,
       account: { id: parseInt(userId!) },
@@ -160,11 +161,8 @@ const TemplateTest: React.FC = () => {
     }
   };
   const endtest = async () => {
-
     router.push("Problemes");
   };
-
-
 
   if (loading) {
     return (
@@ -184,64 +182,85 @@ const TemplateTest: React.FC = () => {
   }
   if (isTestAlreadyDone) {
     return (
-      <View style={styles.test_already_done_container}>
-        <View style={styles.test_finished}>
-          <Text style={styles.test_finished_title}>Test déjà fait !</Text>
-          <Text style={styles.test_finished_subtitle}>Vos réponses :</Text>
-          <FlatList
-            data={userAnswers}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={({ item, index }) => (
-              <View
-                style={[
-                  styles.answerItem,
-                  item.isvalid ? styles.correctAnswer : styles.incorrectAnswer,
-                ]}
-              >
-                <Text style={styles.questionText}>
-                  Question {index + 1}: {item.question.title}
-                </Text>
-                <View style={styles.answerContainer}>
-                  <Text
+      <SafeAreaView style={styles.containers}>
+        <ScrollView contentContainerStyle={styles.testFinishedContainer}>
+          <View style={styles.test_already_done_container}>
+            <View style={styles.test_finished}>
+              <Text style={styles.test_finished_title}>Test déjà fait !</Text>
+              <Text style={styles.test_finished_subtitle}>Vos réponses :</Text>
+              <FlatList
+                data={userAnswers}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={({ item, index }) => (
+                  <View
                     style={[
-                      styles.answerText,
-                      item.isvalid ? styles.correctText : styles.incorrectText,
+                      styles.answerItem,
+                      item.isvalid
+                        ? styles.correctAnswer
+                        : styles.incorrectAnswer,
                     ]}
                   >
-                    {item.content}
-                  </Text>
-                  <Text style={styles.answerResult}>
-                    Réponse: {item.isvalid ? "Correct" : "Incorrect"}
-                  </Text>
-                </View>
-              </View>
-            )}
-          />
-        </View>
-      </View>
+                    <Text style={styles.questionText}>
+                      Question {index + 1}: {item.question.title}
+                    </Text>
+                    <View style={styles.answerContainer}>
+                      <Text
+                        style={[
+                          styles.answerText,
+                          item.isvalid
+                            ? styles.correctText
+                            : styles.incorrectText,
+                        ]}
+                      >
+                        {item.content}
+                      </Text>
+                      <Text style={styles.answerResult}>
+                        Réponse: {item.isvalid ? "Correct" : "Incorrect"}
+                      </Text>
+                    </View>
+                  </View>
+                )}
+                contentContainerStyle={styles.flatListContainer}
+              />
+            </View>
+            <TouchableOpacity
+              style={styles.backButton}
+              onPress={() => router.push("Problemes")}
+            >
+              <Text style={styles.backButtonText}>Retour</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
     );
-  };
+  }
 
   if (isTestFinished) {
     return (
-      <View style={styles.testFinishedContainer}>
-        <Text style={styles.testFinishedTitle}>Test terminé !</Text>
-        <Text style={styles.testFinishedSubtitle}>
-          Récapitulatif des réponses :
-        </Text>
-        {userAnswers.map((answer, index) => (
-          <Text key={index} style={styles.answerResult}>
-            Question {answer.question.id}: {answer.content} -{" "}
-            {answer.correct ? "Correct" : "Incorrect"}
+      <SafeAreaProvider>
+        <ScrollView contentContainerStyle={styles.testFinishedContainer}>
+          <Text style={styles.testFinishedTitle}>Test terminé !</Text>
+          <Text style={styles.testFinishedSubtitle}>
+            Récapitulatif des réponses :
           </Text>
-        ))}
-        <TouchableOpacity style={styles.finishButton} onPress={() => {
-          endtest();
-
-        }}>
-          <Text style={styles.finishButtonText}>Terminer</Text>
-        </TouchableOpacity>
-      </View>
+          <ScrollView style={styles.answersScroll}>
+            {userAnswers.map((answer, index) => (
+              <Text key={index} style={styles.answerResult}>
+                Question {answer.question.id}: {answer.content} -{" "}
+                {answer.correct ? "Correct" : "Incorrect"}
+              </Text>
+            ))}
+          </ScrollView>
+          <TouchableOpacity
+            style={styles.finishButton}
+            onPress={() => {
+              endtest();
+            }}
+          >
+            <Text style={styles.finishButtonText}>Terminer</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      </SafeAreaProvider>
     );
   }
 
@@ -300,7 +319,10 @@ const TemplateTest: React.FC = () => {
         </TouchableOpacity>
       </View>
       {answered && (
-        <TouchableOpacity style={styles.nextQuestionButton} onPress={handleNextQuestion}>
+        <TouchableOpacity
+          style={styles.nextQuestionButton}
+          onPress={handleNextQuestion}
+        >
           <Text style={styles.nextQuestionText}>Question suivante</Text>
         </TouchableOpacity>
       )}
@@ -381,31 +403,155 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "red",
   },
-  testFinishedContainer: {
-    flex: 1,
-    alignItems: "center",
-  },
   testFinishedTitle: {
     fontSize: 24,
     fontWeight: "bold",
+    color: "#432683",
+    textAlign: "center",
+    marginBottom: 10,
   },
   testFinishedSubtitle: {
-    fontSize: 20,
-    marginBottom: 10,
+    fontSize: 18,
+    color: "#666",
+    textAlign: "center",
+    marginBottom: 20,
   },
   answerResult: {
     fontSize: 16,
-    marginBottom: 5,
+    color: "#333",
+    marginBottom: 10,
+    padding: 10,
+    backgroundColor: "#ffffff",
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#ddd",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+    width: "90%",
+    textAlign: "center",
   },
   finishButton: {
-    marginTop: 20,
+    marginTop: 30,
     padding: 15,
     backgroundColor: "#432683",
-    borderRadius: 5,
+    borderRadius: 8,
+    alignItems: "center",
+    width: "80%",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
   },
   finishButtonText: {
     color: "white",
     fontSize: 18,
+    fontWeight: "bold",
+  },
+  test_already_done_container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#f5f5f5",
+    padding: 20,
+  },
+  test_finished: {
+    backgroundColor: "#ffffff",
+    borderRadius: 10,
+    padding: 20,
+    width: "100%",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  answerItem: {
+    padding: 15,
+    borderRadius: 8,
+    marginBottom: 10,
+    backgroundColor: "#f9f9f9",
+    borderWidth: 1,
+    borderColor: "#ddd",
+  },
+  correctAnswer: {
+    borderColor: "#4caf50",
+    backgroundColor: "#e8f5e9",
+  },
+  incorrectAnswer: {
+    borderColor: "#f44336",
+    backgroundColor: "#ffebee",
+  },
+  questionText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 5,
+    color: "#333",
+  },
+  answerContainer: {
+    marginTop: 5,
+  },
+  correctText: {
+    color: "#4caf50",
+    fontWeight: "bold",
+  },
+  incorrectText: {
+    color: "#f44336",
+    fontWeight: "bold",
+  },
+  backButton: {
+    marginTop: 20,
+    padding: 15,
+    backgroundColor: "#432683",
+    borderRadius: 8,
+    alignItems: "center",
+    width: "80%",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  backButtonText: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  testFinishedContainer: {
+    flexGrow: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+  },
+  answersScroll: {
+    marginBottom: 20,
+  },
+  containers: {
+    marginTop: 30,
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#f5f5f5",
+    padding: 20,
+  },
+  flatListContainer: {
+    paddingBottom: 20,
+  },
+  test_finished_title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#432683",
+    textAlign: "center",
+    marginBottom: 10,
+  },
+  test_finished_subtitle: {
+    fontSize: 18,
+    color: "#666",
+    textAlign: "center",
+    marginBottom: 20,
   },
 });
 
