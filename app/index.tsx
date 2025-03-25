@@ -60,20 +60,18 @@ const Login: React.FC = () => {
           />
           <View style={styles.loginForm}>
             <View style={styles.inputCtn}>
-              <Text style={styles.loginSpan}>E-mail</Text>
               <TextInput
                 style={styles.loginInput}
-                placeholder="Exemple@gmail.com"
+                placeholder="E-mail"
                 value={loginData.login}
                 onChangeText={(value) => handleChange("login", value)}
                 required
               />
             </View>
             <View style={styles.inputCtn}>
-              <Text style={styles.loginSpan}>Mot de passe</Text>
               <TextInput
                 style={styles.loginInput}
-                placeholder="***************"
+                placeholder="Mot de passe"
                 value={loginData.password}
                 onChangeText={(value) => handleChange("password", value)}
                 secureTextEntry
@@ -119,20 +117,25 @@ const styles = StyleSheet.create({
   loginForm: {
     width: "100%",
   },
-  loginImg: {},
+  loginImg: {
+    marginBottom: 50,
+  },
   inputCtn: {
     marginBottom: 20,
+    backgroundColor: "#fff",
+    color: "#432683",
+    borderRadius: 10,
   },
   loginSpan: {
     color: "#432683",
     marginBottom: 5,
   },
   loginInput: {
+    color: "#432683",
     width: "100%",
     padding: 10,
-    height: 50,
-    borderWidth: 1,
-    borderColor: "#432683",
+    height: 55,
+
     borderRadius: 10,
   },
   loginButton: {
