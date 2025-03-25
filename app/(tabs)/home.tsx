@@ -1,241 +1,387 @@
-import React, { useEffect } from "react";
-import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
+import React from "react";
+import { View, Text, Image, TouchableOpacity, ScrollView, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-
-import { StyleSheet } from "react-native";
 
 const Home = () => {
   const navigation = useNavigation();
 
   return (
     <ScrollView style={styles.container}>
-      {/* Section JPO */}
-      <View style={styles.jpoSection}>
-        <Text style={styles.jpoTitle}>JOURNÉE PORTE OUVERTE</Text>
-        <Text style={styles.jpoDate}>14 avril 2025</Text>
-        <TouchableOpacity onPress={() => navigation.navigate("Apropos")}>
-          <View style={styles.buttonContainer}>
-            <Text style={styles.buttonText}>Découvrir l’IUT</Text>
-          </View>
-        </TouchableOpacity>
+      {/* 1. Bandeau violet avec logo */}
+      <View style={styles.headerBanner}>
         <Image
-          source={require("../../assets/images/logo_univ3d.png")}
-          style={styles.jpoImage}
+          source={require("../../assets/images/logo_jpo.png")}
+          style={styles.headerLogo}
         />
       </View>
 
-      {/* Section À propos */}
-      <View style={styles.aproposSection}>
-        <Text style={styles.aproposTitle}>À Propos de l’IUT</Text>
+      {/* 2. Section JPO */}
+      <View style={styles.jpoMasterContainer}>
+        <Image
+          source={require("../../assets/images/background_home.png")}
+          style={styles.jpoBackgroundImage}
+          resizeMode="cover"
+        />
+        <View style={styles.jpoSection}>
+          <View style={styles.jpoTextContainer}>
+            <Text style={styles.jpoTitle}>JOURNEE PORTE</Text>
+            <Text style={styles.jpoSubtitle}>OUVERTE</Text>
+            <Text style={styles.jpoDate}>14 avril 2025</Text>
+          </View>
+          <TouchableOpacity 
+            onPress={() => navigation.navigate("Apropos")}
+            style={styles.jpoButton}
+          >
+            <Text style={styles.jpoButtonText}>Découvrir l'IUT</Text>
+          </TouchableOpacity>
+          <Image
+            source={require("../../assets/images/logo_univ3d.png")}
+            style={styles.jpoCornerImage}
+          />
+        </View>
+      </View>
+
+      {/* 3. Section À propos */}
+      <View style={styles.aproposContainer}>
+        <Text style={styles.sectionTitle}>À Propos de l'IUT</Text>
         <Text style={styles.aproposText}>
-          L’IUT de Meaux, affilié à l’Université Gustave Eiffel, est un
-          établissement d’enseignement supérieur au cœur de l’Île-de-France...
+          L'IUT de Meaux, affilié à l'Université Gustave Eiffel, est un
+          établissement d'enseignement supérieur au cœur de l'Île-de-France
+          proposant des formations professionnalisantes dans divers domaines.
+          Notre institut offre un cadre d'apprentissage moderne avec des équipements
+          de pointe et un accompagnement personnalisé pour chaque étudiant.
         </Text>
+        <TouchableOpacity 
+          style={styles.savoirPlusButton}
+          onPress={() => navigation.navigate("Apropos")}
+        >
+          <Text style={styles.savoirPlusText}>En savoir plus</Text>
+          <View style={styles.savoirPlusUnderline} />
+        </TouchableOpacity>
+
         <Image
           source={require("../../assets/images/apropos.png")}
           style={styles.aproposImage}
+          resizeMode="contain"
         />
+    
+    
       </View>
 
-      {/* Section Formations */}
+      {/* 4. Section Formations  */}
       <View style={styles.formationSection}>
-        <Text style={styles.formationTitle}>Nos formations</Text>
-        <View style={styles.formationList}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("Cursus", { section: "mmi" })}
-          >
-            <Image
-              source={require("../../assets/images/mmi.png")}
-              style={styles.formationImage}
-            />
-            <Text style={styles.formationDescription}>
+        <Text style={styles.sectionTitle}>Nos formations</Text>
+        
+        {/* Carte MMI */}
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Cursus", { section: "mmi" })}
+          style={styles.formationCard}
+        >
+          <Image
+            source={require("../../assets/images/mmi.png")}
+            style={styles.formationImage}
+            resizeMode="cover"
+          />
+          <View style={styles.formationOverlay}>
+            <Text style={styles.formationTitle} numberOfLines={2}>
               Métiers du Multimédia et de l'Internet
             </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("Cursus", { section: "gea" })}
-          >
-            <Image
-              source={require("../../assets/images/gea.png")}
-              style={styles.formationImage}
-            />
-            <Text style={styles.formationDescription}>
-              Gestion des Entreprises et des Administrations
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("Cursus", { section: "tc" })}
-          >
-            <Image
-              source={require("../../assets/images/tc.png")}
-              style={styles.formationImage}
-            />
-            <Text style={styles.formationDescription}>
+          </View>
+        </TouchableOpacity>
+
+        {/* Carte TC */}
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Cursus", { section: "tc" })}
+          style={styles.formationCard}
+        >
+          <Image
+            source={require("../../assets/images/tc.png")}
+            style={styles.formationImage}
+            resizeMode="cover"
+          />
+          <View style={styles.formationOverlay}>
+            <Text style={styles.formationTitle} numberOfLines={2}>
               Techniques de Commercialisation
             </Text>
-          </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+
+        {/* Carte GEA */}
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Cursus", { section: "gea" })}
+          style={[styles.formationCard, styles.lastFormationCard]}
+        >
+          <Image
+            source={require("../../assets/images/gea.png")}
+            style={styles.formationImage}
+            resizeMode="cover"
+          />
+          <View style={styles.formationOverlay}>
+            <Text style={styles.formationTitle} numberOfLines={2}>
+              Gestion des Entreprises et des Administrations
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.visitContainer}>
+        {/* Fond violet avec logo Eiffel */}
+        <Image
+          source={require("../../assets/images/background_logo_eiffel.png")}
+          style={styles.visitBackgroundImage}
+          resizeMode="cover"
+        />
+        
+        <View style={styles.visitContent}>
+          <Text style={styles.visitTitle}>Visite Virtuelle</Text>
+          <Text style={styles.visitText}>
+          En vue de notre Journée Portes Ouvertes, plongez dans une visite virtuelle immersive pour découvrir tout ce qui vous attend à l’IUT de Meaux. 
+          Familiarisez-vous avec nos locaux, explorez les salles de cours, fond vert, réalité virtuelle, et les espaces étudiants avant même de venir sur place.
+          </Text>
+          
+          <View style={styles.visitButtonContainer}>
+            <TouchableOpacity 
+              style={styles.visitButton}
+              onPress={() => navigation.navigate("VisiteVirtuelle")}
+            >
+              <Text style={styles.visitButtonText}>En savoir plus</Text>
+            </TouchableOpacity>
+            
+            <Image
+              source={require("../../assets/images/visite_virtuelle.png")}
+              style={styles.visitIllustration}
+            />
+          </View>
         </View>
       </View>
     </ScrollView>
   );
 };
 
-export default Home;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f0f0f5", // Couleur de fond plus douce
+    backgroundColor: "#f0f0f5",
   },
 
-  jpoSection: {
-    width: "100%",
-    height: 300,
+  // 1. Bandeau violet
+  headerBanner: {
+    backgroundColor: "#432683",
+    height: 40,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#432683",
-    padding: 20,
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 5,
-    elevation: 5, // Ombre pour Android
+    width: "100%",
   },
-  jpoTitle: {
-    fontSize: 26,
-    fontWeight: "bold",
-    color: "#fff",
-    textAlign: "center",
-    textTransform: "uppercase",
-    letterSpacing: 1.5,
-  },
-  jpoDate: {
-    fontSize: 18,
-    color: "#fff",
-    marginVertical: 10,
-    fontStyle: "italic",
-  },
-  buttonContainer: {
-    backgroundColor: "#fff",
-    paddingVertical: 12,
-    paddingHorizontal: 25,
-    borderRadius: 25,
-    marginTop: 15,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-    elevation: 3,
-  },
-  buttonText: {
-    fontSize: 16,
-    color: "#432683",
-    fontWeight: "600",
-    textTransform: "uppercase",
-  },
-  jpoImage: {
-    width: 120,
-    height: 120,
+  headerLogo: {
+    width: 60,
+    height: 60,
     resizeMode: "contain",
-    marginTop: 15,
   },
 
-  aproposSection: {
-    padding: 20,
-    backgroundColor: "#fff",
-    marginVertical: 10,
-    borderRadius: 15,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+  // 2. Section JPO
+  jpoMasterContainer: {
+    height: 300, 
+    position: 'relative',
   },
-  aproposTitle: {
-    fontSize: 28,
+  jpoBackgroundImage: {
+    width: '100%',
+    height: '80%',
+  },
+  jpoSection: {
+    position: 'absolute',
+    left: 20, 
+    bottom: 0,
+    width: '60%', 
+    backgroundColor: '#432683',
+    padding: 15, 
+    paddingBottom: 10, 
+  },
+  jpoTitle: {
+    fontSize: 20, 
+    fontWeight: 'bold',
+    color: '#fff',
+  },
+  jpoSubtitle: {
+    fontSize: 20, 
+    fontWeight: 'bold',
+    color: '#fff',
+    marginBottom: 5, 
+  },
+  jpoDate: {
+    fontSize: 14, 
+    color: '#fff',
+    fontStyle: 'italic',
+  },
+  jpoButton: {
+    backgroundColor: '#fff',
+    paddingVertical: 8, 
+    paddingHorizontal: 15, 
+    borderRadius: 0,
+    alignSelf: 'flex-start',
+    marginTop: 10,
+  },
+  jpoButtonText: {
+    color: '#432683',
+    fontWeight: '600',
+    fontSize: 14, 
+  },
+  jpoCornerImage: {
+    position: 'absolute',
+    right: 8, 
+    bottom: 5, 
+    width: 40, 
+    height: 40, 
+    resizeMode: 'contain',
+  },
+
+  // 3. Section À propos
+  aproposContainer: {
+    padding: 25,
+    margin: 20,
+    marginTop: 30,
+  },
+  sectionTitle: {
+    fontSize: 24,
     fontWeight: "bold",
     color: "#432683",
-    marginBottom: 10,
-    textAlign: "center",
+    marginBottom: 15,
   },
   aproposText: {
     fontSize: 16,
-    color: "#333",
+    color: "#432683",
     lineHeight: 24,
-    textAlign: "justify",
+  },
+  savoirPlusButton: {
+    backgroundColor: '#432683',
+    borderRadius: 5,
+    paddingVertical: 8,
+    paddingHorizontal: 15,
+    alignSelf: 'flex-end',
+    marginTop: 15,
+    alignItems: 'center',
+  },
+  savoirPlusText: {
+    color: '#fff',
+    fontWeight: '600',
+    fontSize: 14,
+  },
+  savoirPlusUnderline: {
+    height: 1,
+    backgroundColor: '#fff',
+    width: '100%',
+    marginTop: 3,
   },
   aproposImage: {
-    width: "100%",
-    height: 200,
-    resizeMode: "cover",
-    borderRadius: 10,
-    marginTop: 20,
+    width: '150%',
+    height: 300,
+    alignSelf: 'center',
   },
 
+  // 4. Section Formations 
   formationSection: {
     padding: 20,
-    backgroundColor: "#f8f8f8",
-    borderRadius: 15,
-    marginVertical: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    marginHorizontal: 20,
+    marginBottom: 20,
   },
-  formationTitle: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#432683",
-    textAlign: "center",
-    marginBottom: 15,
-  },
-  formationList: {
-    alignItems: "center",
+  formationCard: {
+    height: 200,
+    borderRadius: 10,
+    overflow: 'hidden',
+    marginBottom: 20,
+    position: 'relative',
   },
   formationImage: {
-    width: 110,
-    height: 110,
-    alignSelf: "center",
-    resizeMode: "contain",
-    marginVertical: 10,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: "#ddd",
+    width: '100%',
+    height: '100%',
   },
-  formationDescription: {
-    fontSize: 16,
-    textAlign: "center",
-    color: "#432683",
-    marginTop: 5,
+  formationOverlay: {
+    position: 'absolute',
+    bottom: 0,
+    left: 2,
+    backgroundColor: 'rgba(67, 38, 131, 0.85)',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderBottomLeftRadius: 5, 
+    width: '80%',
+  },
+  formationTitle: {
+    color: '#fff',
+    fontWeight: '600',
+    fontSize: 14,
+    flexShrink: 1,
+  },
+  lastFormationCard: {
+    marginBottom: -60, 
+    zIndex: 1, 
   },
 
-  visitSection: {
-    padding: 20,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    borderRadius: 15,
-    marginVertical: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+  // 5. Section Visite Virtuelle
+  visitContainer: {
+    backgroundColor: '#583E92',
+    paddingTop: 50,
+    paddingBottom: 40,
+    paddingHorizontal: 20,
+    position: 'relative',
+    marginBottom: 50,
+    overflow: 'hidden',
+    zIndex: -1
+  },
+  visitBackgroundImage: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0, 
+    width: '100%',
+    height: '100%',
+    opacity: 0.5, 
+    resizeMode: 'contain', 
+    zIndex: 1, 
+  },
+  visitContent: {
+    position: 'relative',
+    zIndex: 2, 
   },
   visitTitle: {
     fontSize: 24,
-    fontWeight: "bold",
-    color: "#432683",
-    textAlign: "center",
-    marginBottom: 10,
+    fontWeight: 'bold',
+    color: '#fff',
+    marginBottom: 15,
   },
-  visitDescription: {
+  visitText: {
     fontSize: 16,
-    color: "#333",
-    textAlign: "center",
+    color: '#fff',
     lineHeight: 24,
-    marginBottom: 20,
+    marginBottom: 25,
+    maxWidth: '80%',
+  },
+  visitButtonContainer: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'space-between',
+  },
+  visitButton: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+  },
+  visitButtonText: {
+    color: '#fff',
+    fontWeight: '600',
+    fontSize: 14,
+    textDecorationLine: 'underline',
+    marginBottom: 100,
+  },
+  visitButtonArrow: {
+    width: 24,
+    height: 24,
+    marginLeft: 10,
+  },
+  visitIllustration: {
+    width: 200,
+    height: 150,
+    marginBottom: -20,
+    marginLeft: 50,
   },
 });
+
+export default Home;

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { Tabs } from "expo-router";
+import { Tabs, useRouter } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useColorScheme } from "@/components/useColorScheme";
 import { useClientOnlyValue } from "@/components/useClientOnlyValue";
 
@@ -13,6 +14,18 @@ function TabBarIcon(props: {
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const router = useRouter();
+
+  useEffect(() => {
+    const checkUserId = async () => {
+      const userId = await AsyncStorage.getItem("userId");
+      if (!userId) {
+        router.replace("/");
+      }
+    };
+
+    checkUserId();
+  }, []);
 
   return (
     <Tabs
@@ -47,32 +60,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <TabBarIcon name="book" color={color} />,
         }}
       />
-      <Tabs.Screen
-        name="Apropos"
-        options={{
-          title: "A propos",
-          tabBarLabel: "A propos",
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon name="info-circle" color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="Profil"
-        options={{
-          title: "Profil",
-          tabBarLabel: "Profil",
-          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="Test"
-        options={{
-          title: "Test",
-          tabBarLabel: "Test",
-          tabBarIcon: ({ color }) => <TabBarIcon name="flask" color={color} />,
-        }}
-      />
+
       <Tabs.Screen
         name="Conference"
         options={{
@@ -83,22 +71,24 @@ export default function TabLayout() {
           ),
         }}
       />
+
       <Tabs.Screen
-        name="Profils"
+        name="Problemes"
         options={{
-          title: "Profils",
-          tabBarLabel: "Profils",
-          tabBarIcon: ({ color }) => <TabBarIcon name="users" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="Stats"
-        options={{
-          title: "Stats",
-          tabBarLabel: "Stats",
+          title: "Problemes",
+          tabBarLabel: "Problemes",
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="bar-chart" color={color} />
           ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="Profil"
+        options={{
+          title: "Profil",
+          tabBarLabel: "Profil",
+          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
         }}
       />
     </Tabs>
