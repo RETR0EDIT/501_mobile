@@ -47,6 +47,7 @@ export default function Apropos() {
           </Text>
           <Text style={styles.text3}>
             {"- Une formation adaptée aux besoins actuels.\n"}
+            
             {
               "- Un accompagnement personnalisé dans un environnement à taille humaine.\n"
             }

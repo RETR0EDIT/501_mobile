@@ -64,6 +64,10 @@ const Conference = () => {
                             <Text style={styles.text}>Maître de conférence :</Text>
                             <Text style={styles.info}>{item.account.firstname} {item.account.lastname}</Text>
                         </View>
+                        <View style={styles.infoContainer}>
+                            <Text style={styles.text}>Maître de conférence :</Text>
+                            <Text style={styles.info}>{item.content}</Text>
+                        </View>
                     </View>
                 )}
             />
