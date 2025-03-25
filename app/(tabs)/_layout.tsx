@@ -101,6 +101,17 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="Problemes"
+        options={{
+          title: "Problemes",
+          tabBarLabel: "Problemes",
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="bar-chart" color={color} />
+          ),
+        }}
+      />
     </Tabs>
+
   );
 }
