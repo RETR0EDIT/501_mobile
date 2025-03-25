@@ -350,6 +350,7 @@ const styles = StyleSheet.create({
   iutChiffresContainer: {
     position: "relative",
     padding: 20,
+    height: 700,
     backgroundColor: "#583E92",
     justifyContent: "center",
     alignItems: "center",
