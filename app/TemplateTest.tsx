@@ -237,7 +237,7 @@ const TemplateTest: React.FC = () => {
 
   if (isTestFinished) {
     return (
-      <SafeAreaProvider>
+      <SafeAreaView style={styles.containers}>
         <ScrollView contentContainerStyle={styles.testFinishedContainer}>
           <Text style={styles.testFinishedTitle}>Test terminé !</Text>
           <Text style={styles.testFinishedSubtitle}>
@@ -260,63 +260,67 @@ const TemplateTest: React.FC = () => {
             <Text style={styles.finishButtonText}>Terminer</Text>
           </TouchableOpacity>
         </ScrollView>
-      </SafeAreaProvider>
+      </SafeAreaView>
     );
   }
 
   const currentQuestion = questions[currentQuestionIndex];
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.testName}>{testName}</Text>
       <View style={styles.questionContainer}>
         <Text style={styles.questionTitle}>{currentQuestion.title}</Text>
       </View>
       <View style={styles.answersContainer}>
-        <TouchableOpacity
-          onPress={() => handleAnswerClick(currentQuestion.p1)}
-          disabled={answered}
-          style={styles.answer}
-        >
-          <Image
-            source={require("../assets/images/carre.png")}
-            style={styles.answerImage}
-          />
-          <Text style={styles.answerText}>{currentQuestion.p1}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => handleAnswerClick(currentQuestion.p2)}
-          disabled={answered}
-          style={styles.answer}
-        >
-          <Image
-            source={require("../assets/images/triangle.png")}
-            style={styles.answerImage}
-          />
-          <Text style={styles.answerText}>{currentQuestion.p2}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => handleAnswerClick(currentQuestion.p3)}
-          disabled={answered}
-          style={styles.answer}
-        >
-          <Image
-            source={require("../assets/images/rond.png")}
-            style={styles.answerImage}
-          />
-          <Text style={styles.answerText}>{currentQuestion.p3}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => handleAnswerClick(currentQuestion.p4)}
-          disabled={answered}
-          style={styles.answer}
-        >
-          <Image
-            source={require("../assets/images/losange.png")}
-            style={styles.answerImage}
-          />
-          <Text style={styles.answerText}>{currentQuestion.p4}</Text>
-        </TouchableOpacity>
+        <View style={styles.row}>
+          <TouchableOpacity
+            onPress={() => handleAnswerClick(currentQuestion.p1)}
+            disabled={answered}
+            style={styles.answer1}
+          >
+            <Image
+              source={require("../assets/images/carre.png")}
+              style={styles.answerImage}
+            />
+            <Text style={styles.answerText}>{currentQuestion.p1}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => handleAnswerClick(currentQuestion.p2)}
+            disabled={answered}
+            style={styles.answer2}
+          >
+            <Image
+              source={require("../assets/images/triangle.png")}
+              style={styles.answerImage}
+            />
+            <Text style={styles.answerText}>{currentQuestion.p2}</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.row}>
+          <TouchableOpacity
+            onPress={() => handleAnswerClick(currentQuestion.p3)}
+            disabled={answered}
+            style={styles.answer3}
+          >
+            <Image
+              source={require("../assets/images/rond.png")}
+              style={styles.answerImage}
+            />
+            <Text style={styles.answerText}>{currentQuestion.p3}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => handleAnswerClick(currentQuestion.p4)}
+            disabled={answered}
+            style={styles.answer4}
+          >
+            <Image
+              source={require("../assets/images/losange.png")}
+              style={styles.answerImage}
+            />
+            <Text style={styles.answerText}>{currentQuestion.p4}</Text>
+          </TouchableOpacity>
+        </View>
       </View>
       {answered && (
         <TouchableOpacity
@@ -326,7 +330,7 @@ const TemplateTest: React.FC = () => {
           <Text style={styles.nextQuestionText}>Question suivante</Text>
         </TouchableOpacity>
       )}
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -349,22 +353,16 @@ const styles = StyleSheet.create({
   },
   questionTitle: {
     fontSize: 20,
+    fontWeight: "bold",
     textAlign: "center",
+    color: "#432683",
   },
   answersContainer: {
     width: "100%",
     alignItems: "center",
-  },
-  answer: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#432683",
-    padding: 15,
-    borderRadius: 5,
-    marginVertical: 10,
-    width: "80%",
     justifyContent: "center",
   },
+
   answerText: {
     color: "white",
     fontSize: 18,
@@ -373,7 +371,7 @@ const styles = StyleSheet.create({
   answerImage: {
     width: 50,
     height: 50,
-    marginRight: 10,
+    aspectRatio: 1,
   },
   nextQuestionButton: {
     marginTop: 20,
@@ -552,6 +550,56 @@ const styles = StyleSheet.create({
     color: "#666",
     textAlign: "center",
     marginBottom: 20,
+  },
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "90%",
+    marginVertical: 10,
+  },
+  answer1: {
+    flexDirection: "column",
+    alignItems: "center",
+    backgroundColor: "#432683",
+    padding: 15,
+    borderRadius: 5,
+    marginVertical: 10,
+    width: "45%",
+    aspectRatio: 1,
+    justifyContent: "center",
+  },
+  answer2: {
+    flexDirection: "column",
+    alignItems: "center",
+    backgroundColor: "#7357B2",
+    padding: 15,
+    borderRadius: 5,
+    marginVertical: 10,
+    width: "45%",
+    aspectRatio: 1,
+    justifyContent: "center",
+  },
+  answer3: {
+    flexDirection: "column",
+    alignItems: "center",
+    backgroundColor: "#8B4DB1",
+    padding: 15,
+    borderRadius: 5,
+    marginVertical: 10,
+    width: "45%",
+    aspectRatio: 1,
+    justifyContent: "center",
+  },
+  answer4: {
+    flexDirection: "column",
+    alignItems: "center",
+    backgroundColor: "#D187E4",
+    padding: 15,
+    borderRadius: 5,
+    marginVertical: 10,
+    width: "45%",
+    aspectRatio: 1,
+    justifyContent: "center",
   },
 });
 
