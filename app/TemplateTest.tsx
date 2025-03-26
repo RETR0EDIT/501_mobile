@@ -13,8 +13,8 @@ import {
 import { useRoute } from "@react-navigation/native";
 import Questions from "@/src/services/Questions";
 import Answers from "@/src/services/Answers";
-import ModelQuestion from "@/app/models/ModelQuestion";
-import ModelAnswers from "@/app/models/ModelAnswers";
+import ModelQuestion from "@/src/models/ModelQuestion";
+import ModelAnswers from "@/src/models/ModelAnswers";
 import { navigate } from "expo-router/build/global-state/routing";
 import { useNavigation } from "@react-navigation/native";
 
@@ -40,7 +40,7 @@ const TemplateTest: React.FC = () => {
   const [isTestFinished, setIsTestFinished] = useState<boolean>(false);
   const [isTestAlreadyDone, setIsTestAlreadyDone] = useState<boolean>(false);
   const [userAnswers, setUserAnswers] = useState<ModelAnswers[]>([]);
-
+  const [verifiedAnswers, setVerifiedAnswers] = useState<ModelAnswers[]>([]);
   useEffect(() => {
     const getUserAnswers = async (
       userID: string,
@@ -82,7 +82,7 @@ const TemplateTest: React.FC = () => {
       } catch (err) {
         setError(
           "Erreur lors de la récupération des réponses de l'utilisateur." +
-            userId
+          userId
         );
       }
     };
@@ -107,7 +107,32 @@ const TemplateTest: React.FC = () => {
 
     getQuestions();
   }, [idTest]);
+  useEffect(() => {
+    const fetchVerifiedAnswers = async () => {
+      let userId = await AsyncStorage.getItem("userId");
+      if (!userId) {
+        console.error("ID utilisateur non trouvé dans le local storage");
+        return;
+      }
 
+      try {
+        const verifiedAnswersResponse = await Answers.ReadByUserId(userId);
+        const testAnswers = verifiedAnswersResponse.filter(
+          (answer) => answer.question.test.id === parseInt(idTest!)
+        );
+        setVerifiedAnswers(testAnswers);
+      } catch (err) {
+        console.error(
+          "Erreur lors de la récupération des réponses vérifiées:",
+          err
+        );
+      }
+    };
+
+    if (isTestFinished) {
+      fetchVerifiedAnswers();
+    }
+  }, [isTestFinished, idTest]);
   const handleAnswerClick = async (selectedAnswer: string) => {
     const currentQuestion = questions[currentQuestionIndex];
     setAnswered(true);
@@ -117,7 +142,7 @@ const TemplateTest: React.FC = () => {
     const answer: ModelAnswers = {
       id: 0,
       content: selectedAnswer,
-      correct: isCorrect,
+      isvalid: isCorrect,
       account: { id: parseInt(userId!) },
       question: { id: currentQuestion.id },
     };
@@ -244,10 +269,10 @@ const TemplateTest: React.FC = () => {
             Récapitulatif des réponses :
           </Text>
           <ScrollView style={styles.answersScroll}>
-            {userAnswers.map((answer, index) => (
+            {verifiedAnswers.map((answer, index) => (
               <Text key={index} style={styles.answerResult}>
                 Question {answer.question.id}: {answer.content} -{" "}
-                {answer.correct ? "Correct" : "Incorrect"}
+                {answer.isvalid ? "Correct" : "Incorrect"}
               </Text>
             ))}
           </ScrollView>
@@ -269,10 +294,10 @@ const TemplateTest: React.FC = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.titleContainer}>
-      <Text style={styles.testName}>{testName}</Text>
-      <View style={styles.questionContainer}>
-        <Text style={styles.questionTitle}>{currentQuestion.title}</Text>
-      </View>
+        <Text style={styles.testName}>{testName}</Text>
+        <View style={styles.questionContainer}>
+          <Text style={styles.questionTitle}>{currentQuestion.title}</Text>
+        </View>
       </View>
       <View style={styles.answersContainer}>
         <View style={styles.row}>
@@ -367,7 +392,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 3,
     elevation: 5,
-    },
+  },
   questionTitle: {
     fontSize: 20,
     fontWeight: "bold",
