@@ -651,8 +651,11 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   visitIllustration: {
+    position: "absolute",
+    bottom: -30,
+    right: -20,
     width: 200,
-    height: 150,
+    height: 190,
     marginBottom: -20,
     marginLeft: 50,
   },
