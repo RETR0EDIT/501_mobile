@@ -512,7 +512,7 @@ const styles = StyleSheet.create({
 
   // 5. Section Comment Nous Rejoindre
   rejoindreInfos: {
-    backgroundColor: "#fff",
+  
   },
   rejoindreContainer: {
     margin: 20,
