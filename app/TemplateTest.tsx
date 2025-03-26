@@ -304,6 +304,7 @@ const TemplateTest: React.FC = () => {
   const currentQuestion = questions[currentQuestionIndex];
 
   return (
+  
     <SafeAreaView style={styles.container}>
       <View style={styles.titleContainer}>
         <Text style={styles.testName}>{testName}</Text>

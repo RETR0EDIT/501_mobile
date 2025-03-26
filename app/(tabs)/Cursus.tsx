@@ -14,13 +14,12 @@ export default function Cursus() {
 
   return (
     <ScrollView>
-      <View style={styles.banniere}>
-        <Image
-          source={require("@/assets/images/logo2.png")}
-          style={styles.banniereImage}
-        />
-      </View>
-
+       <View style={styles.headerBanner}>
+              <Image
+                source={require("../../assets/images/logo_jpo.png")}
+                style={styles.headerLogo}
+              />
+            </View>
       <View style={styles.allContainer}>
         {/* Section GEA */}
 
@@ -444,18 +443,17 @@ export default function Cursus() {
 }
 
 const styles = StyleSheet.create({
-  banniere: {
-    height: 50,
-    marginBottom: 20,
+  headerBanner: {
     backgroundColor: "#432683",
+    height: 40,
+    justifyContent: "center",
+    alignItems: "center",
     width: "100%",
   },
-  banniereImage: {
-    width: "20%",
-    height: 35,
-    marginTop: 10,
-    marginLeft: "auto",
-    marginRight: "auto",
+  headerLogo: {
+    width: 60,
+    height: 60,
+    resizeMode: "contain",
   },
   allTitle: {
     fontSize: 20,

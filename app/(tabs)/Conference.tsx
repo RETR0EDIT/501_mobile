@@ -5,8 +5,11 @@ import {
   Text,
   FlatList,
   StyleSheet,
+  Image,
+  ScrollView,
   ActivityIndicator,
 } from "react-native";
+
 
 const Conference = () => {
   const [ConferencesList, setConferencesList] = useState<ModelConference[]>([]);
@@ -46,7 +49,14 @@ const Conference = () => {
   }
 
   return (
+    <ScrollView>
     <View style={styles.container}>
+        <View style={styles.headerBanner}>
+                      <Image
+                        source={require("../../assets/images/logo_jpo.png")}
+                        style={styles.headerLogo}
+                      />
+                    </View>
       <Text style={styles.confTitle}>CONFERENCES</Text>
       <FlatList
         data={ConferencesList}
@@ -66,14 +76,26 @@ const Conference = () => {
         )}
       />
     </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    padding: 15,
+  },
+
+  headerBanner: {
+    backgroundColor: "#432683",
+    height: 40,
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+  },
+  headerLogo: {
+    width: 60,
+    height: 60,
+    resizeMode: "contain",
   },
   loading: {
     flex: 1,
@@ -104,6 +126,7 @@ const styles = StyleSheet.create({
     color: "#432683",
     textAlign: "center",
     marginBottom: 10,
+    marginTop: 20,
   },
   text: {
     fontWeight: "bold",

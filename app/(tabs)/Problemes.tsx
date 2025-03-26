@@ -93,6 +93,12 @@ export default function Problemes() {
 
   return (
     <View style={styles.container}>
+       <View style={styles.headerBanner}>
+              <Image
+                source={require("../../assets/images/logo_jpo.png")}
+                style={styles.headerLogo}
+              />
+            </View>
       <View style={styles.titleContainer}>
       <Text style={styles.title}>CHOISIS TON QUIZZ</Text>
       </View>
@@ -163,6 +169,18 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 3,
     elevation: 5,
+  },
+  headerBanner: {
+    backgroundColor: "#432683",
+    height: 40,
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+  },
+  headerLogo: {
+    width: 60,
+    height: 60,
+    resizeMode: "contain",
   },
   
   container: {
