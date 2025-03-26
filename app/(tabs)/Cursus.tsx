@@ -463,6 +463,7 @@ const styles = StyleSheet.create({
     color: "#432683",
     marginBottom: 10,
     marginLeft: 30,
+    marginTop: 50,
   },
 
   allTitle2: {
