@@ -268,13 +268,25 @@ const TemplateTest: React.FC = () => {
           <Text style={styles.testFinishedSubtitle}>
             Récapitulatif des réponses :
           </Text>
+
           <ScrollView style={styles.answersScroll}>
+
             {verifiedAnswers.map((answer, index) => (
-              <Text key={index} style={styles.answerResult}>
-                Question {answer.question.id}: {answer.content} -{" "}
-                {answer.isvalid ? "Correct" : "Incorrect"}
-              </Text>
+              <View
+                style={[
+                  styles.answerItem,
+                  answer.isvalid
+                    ? styles.correctAnswer
+                    : styles.incorrectAnswer,
+                ]}
+              >
+                <Text key={index} style={styles.answerResult}>
+                  Question {answer.question.id}: {answer.content} -{" "}
+                  {answer.isvalid ? "Correct" : "Incorrect"}
+                </Text>
+              </View>
             ))}
+
           </ScrollView>
           <TouchableOpacity
             style={styles.finishButton}
