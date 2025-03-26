@@ -383,10 +383,13 @@ const styles = StyleSheet.create({
   answerText: {
     color: "white",
     fontSize: 18,
+    marginTop: 15,
+    textAlign: "center",
     margin: "auto",
     fontWeight: "bold",
   },
   answerImage: {
+    marginTop: 10,
     width: 50,
     height: 50,
     aspectRatio: 1,
